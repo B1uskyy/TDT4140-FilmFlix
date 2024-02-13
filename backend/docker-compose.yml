@@ -1,0 +1,51 @@
+services:
+  backend:
+    container_name: pu-backend
+    hostname: backend
+    volumes:
+      - ./:/backend
+    command: bash -c 'mvn spring-boot:run'
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    cap_add:
+      - SYS_PTRACE
+    tty: true
+    stdin_open: true
+    network_mode: "host"
+    depends_on:
+      - db
+  env:
+    container_name: pu-backend
+    hostname: backend
+    volumes:
+      - ./:/backend
+    command: bash
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    cap_add:
+      - SYS_PTRACE
+    tty: true
+    stdin_open: true
+    network_mode: "host"
+    depends_on:
+      - db
+  db:
+    container_name: pu-db
+    hostname: db
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pu_database
+      MYSQL_USER: pu_user
+      MYSQL_PASSWORD: pu_password
+    ports:
+        - "3306:3306"
+    volumes:
+      - ./sql_data:/var/lib/mysql
+    network_mode: "host"
