@@ -60,3 +60,14 @@
   border: 1px solid grey;
   padding-left: 8px;
 }
+
+input[type="button"] {
+    border: none;
+    background: cornflowerblue;
+    color: white;
+    padding: 12px 24px;
+    margin: 8px;
+    font-size: 24px;
+    border-radius: 8px;
+    cursor: pointer;
+}
