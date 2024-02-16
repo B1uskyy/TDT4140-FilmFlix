@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from "react";
+import {Nav, Navbar} from "react-bootstrap";
 
 let address = "http://localhost:8080/api/hello";
 
@@ -23,22 +24,18 @@ function HelloWorld() {
 function App() {
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <HelloWorld/>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+        <Navbar classname="p-3">
+            <Navbar.Brand href="#home">
+                Home
+            </Navbar.Brand>
+            <Navbar.Brand href="#user">
+                My user
+            </Navbar.Brand>
+            <Navbar.Brand href="#movies">
+                Movies
+            </Navbar.Brand>
+        </Navbar>
     </div>
   );
 }
