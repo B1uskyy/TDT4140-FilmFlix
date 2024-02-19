@@ -12,12 +12,12 @@ public class OMDBFetch {
 
     private static final String API_URL = "http://www.omdbapi.com/?";
 
-    private static OMDBObject fetchMovie(String omdbApiKey, String imdbId) {
+    public static OMDBObject fetchMovie(String omdbApiKey, String imdbId) {
         String urlS = API_URL + "apikey=" + omdbApiKey;
 
         urlS = urlS + "&i=" + imdbId;
 
-        try{
+        try {
             // send request, get json response
             URL url = new URL(urlS);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -45,7 +45,7 @@ public class OMDBFetch {
             br.close();
             con.disconnect();
 
-            if (!json.getResponse()){
+            if (!json.getResponse()) {
                 System.out.println("Failing fetching movie poster from OMDB. Error: " + json.getError());
                 System.out.println("URL: " + urlS);
                 return null;
@@ -60,66 +60,5 @@ public class OMDBFetch {
 
         return null;
     }
-
-
-    public static String fetchMoviePoster(String omdbApiKey, String imdbId) {
-        OMDBObject movie = fetchMovie(omdbApiKey, imdbId);
-        if (movie == null) {
-            return null;
-        }
-        return movie.getPoster();
-    }
 }
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-class OMDBObject {
-    @JsonProperty("Title")
-    private String Title;
-
-    @JsonProperty("Poster")
-    private String Poster;
-
-    @JsonProperty("Response")
-    private Boolean Response;
-
-    @JsonProperty("Error")
-    private String Error;
-
-    public String getError() {
-        return Error;
-    }
-
-    public void setError(String error) {
-        Error = error;
-    }
-
-
-    public String getTitle() {
-        return Title;
-    }
-
-    public void setTitle(String title) {
-        Title = title;
-    }
-
-    public String getPoster() {
-        return Poster;
-    }
-
-    public void setPoster(String poster) {
-        Poster = poster;
-    }
-
-    public Boolean getResponse() {
-        return Response;
-    }
-
-    public void setResponse(Boolean response) {
-        Response = response;
-    }
-
-    public String toString(){
-
-        return "OMDB Object (Title: " + Title + ", Poster: " + Poster + ", Response: " + Response + ")";
-    }
-}

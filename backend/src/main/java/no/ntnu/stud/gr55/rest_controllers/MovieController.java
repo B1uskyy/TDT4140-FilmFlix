@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,7 +27,8 @@ public class MovieController {
 
     @GetMapping("/movies")
     public List<Movie> getMovies() {
-        Pageable pageable = PageRequest.of(0, 10);
+        Sort sort = Sort.by("year").descending(); // primitive sort for first release
+        Pageable pageable = PageRequest.of(0, 10, sort);
 
         return movieRepository.findAll(pageable).getContent();
     }
@@ -36,7 +38,7 @@ public class MovieController {
         return movieRepository.findByTitleContainingIgnoreCase(title);
     }
 
-    @GetMapping("/movie/{id}")
+    @GetMapping("/movies/view/{id}")
     public Movie getMovie(@PathVariable("id") String id) {
         Movie movie = movieRepository.findById(id).orElse(null);
 
@@ -47,11 +49,9 @@ public class MovieController {
         Hibernate.initialize(movie.getDirectors());
         Hibernate.initialize(movie.getWriters());
 
-        if (movie.getPosterUrl() == null) {
-            boolean posterFetch = movie.attemptFetchPosterURL(omdbApiKey);
-            if (posterFetch) {
-                movieRepository.save(movie);
-            }
+        boolean omdbFetch = movie.attemptPopulateMissingOMDB(omdbApiKey);
+        if (omdbFetch) {
+            movieRepository.save(movie);
         }
 
         return movie;

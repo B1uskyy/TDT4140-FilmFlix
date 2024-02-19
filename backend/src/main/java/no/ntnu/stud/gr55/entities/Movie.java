@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import no.ntnu.stud.gr55.utils.OMDBFetch;
+import no.ntnu.stud.gr55.utils.OMDBObject;
 
 /**
  * Class describing movie entities
@@ -33,6 +34,11 @@ public class Movie {
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     private List<String> genres;
 
+    private String description;
+
+    @Column(nullable = true)
+    private Integer imdbVotes;
+
     public String getTitle() {
         return title;
     }
@@ -53,7 +59,7 @@ public class Movie {
         return runtimeMinutes;
     }
 
-    public void setRuntimeMinutes(int runtimeMinutes) {
+    public void setRuntimeMinutes(Integer runtimeMinutes) {
         this.runtimeMinutes = runtimeMinutes;
     }
 
@@ -93,30 +99,60 @@ public class Movie {
         return posterUrl;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public void setPosterUrl(String posterUrl) {
         this.posterUrl = posterUrl;
     }
 
-    public boolean attemptFetchPosterURL(String omdbApiKey) {
+    public Integer getImdbVotes() {
+        return imdbVotes;
+    }
+
+    public void setImdbVotes(Integer imdbVotes) {
+        this.imdbVotes = imdbVotes;
+    }
+
+    public boolean attemptPopulateMissingOMDB(String omdbApiKey) {
         if (omdbApiKey == null) {
             System.out.println("OMDB API key not set.");
             return false;
         }
 
-        if (this.posterUrl != null) {
-            System.out.println("Poster for " + this.title + " already fetched.");
+        if (!(this.posterUrl == null || this.description == null || this.imdbVotes == null)) {
+            System.out.println("OMDB data for " + this.title + " already fetched.");
             return false;
         }
-        System.out.println("Fetching poster for " + this.title + "...");
+        System.out.println("Fetching missing OMDB data for " + this.title + "...");
 
-        String poster = OMDBFetch.fetchMoviePoster(omdbApiKey, this.id);
-        if (poster != null) {
-            this.posterUrl = poster;
-            System.out.println("Fetched poster for " + this.title + " successfully.");
-            return true;
-        } else {
-            System.out.println("Failed fetching poster for " + this.title + ".");
+        OMDBObject omdbObject = OMDBFetch.fetchMovie(omdbApiKey, this.id);
+
+        if (omdbObject == null) {
+            System.out.println("Failed fetching missing OMDB data for " + this.title + ".");
             return false;
         }
+
+        if (getPosterUrl() == null) {
+            setPosterUrl(omdbObject.getPoster());
+            System.out.println("Fetched poster for " + this.title + " successfully.");
+        }
+
+        if (getDescription() == null) {
+            setDescription(omdbObject.getDescription());
+            System.out.println("Fetched description for " + this.title + " successfully.");
+        }
+
+        if (getImdbVotes() == null) {
+            setImdbVotes(omdbObject.getImdbVotes());
+            System.out.println("Fetched IMDB votes for " + this.title + " successfully.");
+        }
+
+        return true;
+
     }
 }
