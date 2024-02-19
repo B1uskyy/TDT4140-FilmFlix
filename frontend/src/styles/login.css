@@ -7,6 +7,10 @@
   --page-font: "Jockey One", sans-serif; 
 }
 
+body {
+  font-family: var(--page-font);
+}
+
 .mainContainer {
   background-color: var(--background-color) ;
   color: white; 
@@ -111,7 +115,6 @@ input[type="button"] {
 
 .filmFlixTitle {
   font-size: 100px;
-  font-family: var(--page-font);
   font-weight: 400;
   font-style: normal;
 }
@@ -122,5 +125,17 @@ input[type="button"] {
   height: 100%;
   width: 100%;
   opacity: 60%;
+}
+
+
+.filmFlixFooterLogo {
+  position: relative;
+  left: -250px; 
+  font-size: 48px;
+}
+
+
+.signupLink {
+  color: white;
 }
 

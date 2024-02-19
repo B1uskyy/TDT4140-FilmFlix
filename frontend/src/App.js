@@ -5,11 +5,14 @@ import Login from "./pages/Login";
 
 function App() {
 	return (
-		<Router>
-			<Routes>
-				<Route path="/Login" element={<Login />} />
-			</Routes>
-		</Router>
+		<div>
+			<Router>
+				<Routes>
+					<Route path="/Login" exact={true} element={<Login />} />
+					<Route path="/Homepage" />
+				</Routes>
+			</Router>
+		</div>
 	);
 }
 

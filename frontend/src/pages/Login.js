@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/login.css";
 import posters from "./../img/posters.jpg";
+import users from "./../data/users.json";
+
 // import Logo from "./../components/Logo";
 
 function Login(props) {
@@ -13,6 +15,47 @@ function Login(props) {
 
 	// eslint-disable-next-line
 	const navigate = useNavigate();
+
+	const validateCredentials = async () => {
+		try {
+			// Set initial error values to empty
+			setEmailError("");
+			setPasswordError("");
+
+			// Check if the user has entered both fields correctly
+			if ("" === email) {
+				setEmailError("Please enter your email");
+				return;
+			}
+
+			if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+				setEmailError("Please enter a valid email");
+				return;
+			}
+
+			if ("" === password) {
+				setPasswordError("Please enter a password");
+				return;
+			}
+
+			// Find matching user in the data
+			const foundUser = users.find(
+				(user) => user.email === email && user.password === password,
+			);
+
+			if (foundUser) {
+				setSuccessfulLogin("Login successful!");
+				const path = "/";
+				navigate(path);
+				// Store any user data or tokens if available
+			} else {
+				throw new Error("Invalid email or password");
+			}
+		} catch (error) {
+			console.error("Login error:", error);
+			setEmailError("Invalid email or password");
+		}
+	};
 
 	const onButtonClick = () => {
 		// Set initial error values to empty
@@ -40,7 +83,7 @@ function Login(props) {
 
 		// Authentication calls will be made here...
 
-		setSuccessfulLogin("Login successful!");
+		validateCredentials();
 	};
 
 	return (
@@ -69,6 +112,7 @@ function Login(props) {
 				<div className={"inputContainer"}>
 					<p className="inputTitle">Password</p>
 					<input
+						type="password"
 						value={password}
 						placeholder="Enter your password here"
 						onChange={(ev) => setPassword(ev.target.value)}
@@ -84,8 +128,13 @@ function Login(props) {
 						onClick={onButtonClick}
 						value={"Enter FilmFlix"}
 					/>
+					<a href="/register" className="signupLink">
+						{" "}
+						New user? Sign up
+					</a>
 					<label className="successfulLogin">{successfulLogin}</label>
 				</div>
+				<h3 className="filmFlixFooterLogo"> FilmFlix</h3>
 			</div>
 		</div>
 	);
