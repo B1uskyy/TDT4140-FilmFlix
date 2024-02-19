@@ -1,9 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Jockey+One&display=swap');
+
+
 .mainContainer {
+  background-color: #6B2C2C;
+  color: white; 
+  display: flex; 
+  
+}
+
+.rightSide {
   flex-direction: column;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  width: 60vw;
+}
+
+.leftSide {
+  width: 40vw;
+  height: 100vh;
+  background-color: black;
+
 }
 
 .titleContainer {
@@ -70,4 +88,23 @@ input[type="button"] {
     font-size: 24px;
     border-radius: 8px;
     cursor: pointer;
+}
+
+.inputTitle {
+  font-weight: 500;
+}
+
+.filmFlixTitle {
+  font-size: 100px;
+  font-family: "Jockey One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.posterImage {
+  object-fit: cover; 
+  height: 100%;
+  /* transform: rotate(90deg); */
+  width: 100%;
 }
