@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/login.css";
 import posters from "./../img/posters.jpg";
+// import Logo from "./../components/Logo";
 
 function Login(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
+	const [successfulLogin, setSuccessfulLogin] = useState("");
 
 	// eslint-disable-next-line
 	const navigate = useNavigate();
@@ -16,6 +18,7 @@ function Login(props) {
 		// Set initial error values to empty
 		setEmailError("");
 		setPasswordError("");
+		setSuccessfulLogin("");
 
 		// Check if the user has entered both fields correctly
 		if ("" === email) {
@@ -36,6 +39,8 @@ function Login(props) {
 		}
 
 		// Authentication calls will be made here...
+
+		setSuccessfulLogin("Login successful!");
 	};
 
 	return (
@@ -44,6 +49,7 @@ function Login(props) {
 				<img src={posters} alt="poster" className="posterImage" />
 			</div>
 			<div className="rightSide">
+				{/* <Logo /> */}
 				<h1 className="filmFlixTitle">FilmFlix</h1>
 				<div className={"titleContainer"}>
 					<div>Login</div>
@@ -76,8 +82,9 @@ function Login(props) {
 						className={"inputButton"}
 						type="button"
 						onClick={onButtonClick}
-						value={"Log in"}
+						value={"Enter FilmFlix"}
 					/>
+					<label className="successfulLogin">{successfulLogin}</label>
 				</div>
 			</div>
 		</div>

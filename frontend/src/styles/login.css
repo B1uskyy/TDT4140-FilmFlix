@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Jockey+One&display=swap');
 
 
+:root {
+  --background-color:#6B2C2C ;
+  --button-color: #317B93;
+  --page-font: "Jockey One", sans-serif; 
+}
+
 .mainContainer {
-  background-color: #6B2C2C;
+  background-color: var(--background-color) ;
   color: white; 
   display: flex; 
   
@@ -65,6 +71,14 @@
   justify-content: center;
 }
 
+.successfulLogin {
+
+  position: relative;
+  left: 25%;
+  font-weight: 500;
+  
+}
+
 .inputContainer > .errorLabel {
   color: red;
   font-size: 12px;
@@ -81,13 +95,14 @@
 
 input[type="button"] {
     border: none;
-    background: cornflowerblue;
+    background: var(--button-color);
     color: white;
     padding: 12px 24px;
     margin: 8px;
     font-size: 24px;
     border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
 }
 
 .inputTitle {
@@ -96,7 +111,7 @@ input[type="button"] {
 
 .filmFlixTitle {
   font-size: 100px;
-  font-family: "Jockey One", sans-serif;
+  font-family: var(--page-font);
   font-weight: 400;
   font-style: normal;
 }
@@ -108,3 +123,4 @@ input[type="button"] {
   width: 100%;
   opacity: 60%;
 }
+
