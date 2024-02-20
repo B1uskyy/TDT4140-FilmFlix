@@ -13,6 +13,8 @@ class RESTFetcher {
         return this.urlMovies + "/search/" + query;
     }
 
+    static urlGenres = this.urlMovies + "/genres"
+
     static jsonToMovie(json) {
         console.log("json: " + json)
 
@@ -92,6 +94,50 @@ class RESTFetcher {
         catch (error){
             console.log("Failed fetching movie: " + error)
             return null
+        }
+    }
+
+    static async searchMovies(query) {
+        try{
+            const response = await fetch(this.urlMovieSearch(query), {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            if (!response.ok){
+                console.log("Could not fetch movies")
+                return []
+            }
+            const json = await response.json();
+            return json.map(movie => this.jsonToMovie(movie));
+        }
+        catch (error){
+            console.log("Failed fetching movies: " + error)
+            return []
+        }
+    }
+
+    static async fetchGenres() {
+        console.log("Genres url: " + this.urlGenres)
+        try{
+            const response = await fetch(this.urlGenres, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            if (!response.ok){
+                console.log("Could not fetch genres")
+                return []
+            }
+            return await response.json();
+        }
+        catch (error){
+            console.log("Failed fetching genres: " + error)
+            return []
         }
     }
 }
