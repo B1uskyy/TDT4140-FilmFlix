@@ -1,3 +1,7 @@
 .idea
 target
 sql_data/*
+.vscode
+venv
+.DS_Store
+.env

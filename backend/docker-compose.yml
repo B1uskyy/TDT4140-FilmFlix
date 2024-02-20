@@ -49,3 +49,29 @@ services:
     volumes:
       - ./sql_data:/var/lib/mysql
     network_mode: "host"
+
+  populate_db:
+    container_name: pu-setup-db
+    hostname: setup-db
+    build:
+      context: scripts/populate_database
+      dockerfile: Dockerfile
+    network_mode: "host"
+
+  load_db: # Starts spring boot, but mounting the database file
+    container_name: pu-load-db
+    hostname: load-db
+    volumes:
+      - ./:/backend
+      - ./db:/backend/src/main/resources/
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    cap_add:
+      - SYS_PTRACE
+    tty: true
+    stdin_open: true
+    network_mode: "host"
+    depends_on:
+      - db
+    command: bash -c 'mvn spring-boot:run'
