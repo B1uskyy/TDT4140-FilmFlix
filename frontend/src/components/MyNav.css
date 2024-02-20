@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+}
+
+body { 
+    margin: 0;
+}
+
+.navbar-style {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:  #501919;
+}
+
+.search-button-style {
+    background: #3E1414;
+}
+
+.search-bar-style {
+    display: flex;
+}
+
+.menu-items-style {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 50px;
+}
+
+.logo-style {
+    width: 150px;
+    height: 90px;
+    margin-left: 20px;
+}
+
+.nav-div {
+    max-height: 150px;
+    height: 150px;
+}
