@@ -45,7 +45,7 @@ function Login(props) {
 
 			if (foundUser) {
 				setSuccessfulLogin("Login successful!");
-				const path = "/";
+				const path = "/Homepage";
 				navigate(path);
 				// Store any user data or tokens if available
 			} else {

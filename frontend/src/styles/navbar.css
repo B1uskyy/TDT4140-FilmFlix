@@ -16,7 +16,6 @@ nav {
     top: 0;
 }
 
-
 .menu-items {
     min-width: 300px;
     display: flex;
@@ -35,23 +34,18 @@ nav {
     margin-left: 10px;
 }
 
-.menu-items-right {
-    display: flex;
-    align-items: center;
-    margin-right: 30px;
-}
-
-.drop-button {
-    font-size: 16px;
-    border: none;
-    outline: none;
-    color: white;
-    padding: 14px 16px;
-    background-color: inherit;
-}
-
 .menu-items div:hover {
     background-color: #3E1414;
+}
+
+.menu-items-right div:hover {
+    background-color: #3E1414;
+}
+
+.menu-items-right div {
+    min-height: 70px;
+    min-width: 100px;
+    justify-content: center;
 }
 
 .menu-items div {
@@ -70,4 +64,18 @@ nav {
 a:link, a:visited {
     color: white;
     text-decoration: none;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.menu-items-right {
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    padding-right: 50px;
+    justify-content: right;
 }

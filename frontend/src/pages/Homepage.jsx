@@ -4,9 +4,6 @@ import ponyo from "../img/ponyo.jpg"
 import totoro from "../img/totoro.jpg"
 import Navbar from "../components/Navbar.jsx"
 
-
-
-
 function Homepage() {
     return (
         <div className="main-container"> 
