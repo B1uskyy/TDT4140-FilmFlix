@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #6B2C2C;
+}
+
+.trending-movies {
+    display: flex;
+    overflow-x: auto;
+  }
+  
+  .movie-card {
+    min-height: 300px;
+    min-width: 250px;
+    padding: 10px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .picture {
+    max-height: 300px;
+  }
+
+  .recommendation-container {
+    background-color: #501919;
+    color: #FFFFFF;
+    margin-left: 20px;
+    margin-top: 50px;
+    margin-right: 20px;
+    border-radius: 10px;
+
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #6B2C2C;
+  }
+
+.title-container {
+  margin-left: 30px;
+  color: #CCCCCC;
+}
