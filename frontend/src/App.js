@@ -5,19 +5,20 @@ import Login from "./pages/Login";
 import Homepage from "./pages/Homepage";
 import Movies from "./pages/Movies";
 import UserSite from "./pages/UserSite";
-import FilmCard from "./pages/FilmCard";
+import MovieCard from "./pages/MovieCard";
 
 
 function App() {
+
 	return (
 		<div>
 			<Router>
 				<Routes>
-					<Route path="/Login" exact={true} element={<Login />} />
-					<Route path="/Homepage" element={<Homepage />}></Route>
-					<Route path="/UserSite" element={<UserSite />}></Route>
-					<Route path="/FilmCard" element={<FilmCard />}></Route>
-					<Route path="/Movies" element={<Movies />}></Route>
+					<Route path="/login" exact={true} element={<Login />} />
+					<Route path="/homepage" element={<Homepage />}></Route>
+					<Route path="/usersite" element={<UserSite />}></Route>
+					<Route path="/moviecard" element={<MovieCard />}></Route>
+					<Route path="/movies" element={<Movies />}></Route>
 				</Routes>
 			</Router>
 		</div>

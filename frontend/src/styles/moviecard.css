@@ -1,13 +1,13 @@
-/* FilmCard.css */
+/* movieCard.css */
 
-.film-card {
+.movie-card {
     display: flex;
     margin-bottom: 20px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
   
-img.film-card {
+img.movie-card {
     display: flex;
     max-width: 450px;
     height: auto;
@@ -15,7 +15,7 @@ img.film-card {
     margin-bottom: 40px;
 }
   
-h2.film-card {
+h2.movie-card {
     background: rgb(51, 2, 7);
     display: flex;
     float: center;
@@ -24,18 +24,18 @@ h2.film-card {
     color: cornsilk;
 }
   
-p.film-card {
+p.movie-card {
     float: center;
     margin-bottom: 5px;
     color: cornsilk
 }
-.film-card-content {
+.movie-card-content {
     float: center;
     margin-bottom: 10px;
     color: cornsilk;
 }
 
-.film-card-container {
+.movie-card-container {
     background-color: #590e0e; 
     padding: 35px; 
     width: 100%;
