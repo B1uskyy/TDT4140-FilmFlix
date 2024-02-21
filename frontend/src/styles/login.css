@@ -19,8 +19,8 @@ body {
 }
 
 .rightSide {
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -32,15 +32,6 @@ body {
   height: 100vh;
   background-color: black;
 
-}
-
-.titleContainer {
-  display: flex;
-  flex-direction: column;
-  font-size: 64px;
-  font-weight: bolder;
-  align-items: center;
-  justify-content: center;
 }
 
 .resultContainer, .historyItem { 
@@ -113,10 +104,8 @@ input[type="button"] {
   font-weight: 500;
 }
 
-.filmFlixTitle {
-  font-size: 100px;
-  font-weight: 400;
-  font-style: normal;
+.filmFlixLogo {
+  min-width: 350px;
 }
 
 
@@ -127,15 +116,8 @@ input[type="button"] {
   opacity: 60%;
 }
 
-
-.filmFlixFooterLogo {
-  position: relative;
-  left: -250px; 
-  font-size: 48px;
-}
-
-
 .signupLink {
   color: white;
+  text-align: right;
 }
 
