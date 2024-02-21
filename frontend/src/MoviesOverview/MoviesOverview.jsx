@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import './MoviesOverview.css'; // Importer CSS-filen
 import RESTFetcher from '../helpers/RESTFetcher';
 
-
-
 const MoviesOverview = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -41,6 +39,8 @@ const MoviesOverview = () => {
     setShowFilters(false); // Skjul filterboksene etter filtrering
   };
 
+  // https://via.placeholder.com/150
+
   return (
     <div className="movies-overview-container">
       <div className="search-container">
@@ -68,6 +68,7 @@ const MoviesOverview = () => {
             <img src={movie.posterURL} alt={movie.title} />
             <h2>{movie.title}</h2>
             <p>Poster url {movie.posterURL}</p>
+            
             <p>Year: {movie.year}</p>
           </div>
         ))}
