@@ -27,7 +27,7 @@ class RESTFetcher {
             json.year,
             json.runtimeMinutes,
             json.genres,
-            json.posterURL,
+            json.posterUrl,
             json.description,
             directors,
             writers,
