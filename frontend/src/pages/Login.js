@@ -4,7 +4,7 @@ import "./../styles/login.css";
 import posters from "./../img/posters.jpg";
 import users from "./../data/users.json";
 
-// import Logo from "./../components/Logo";
+// import Logo from "./../components/Logo";æ
 
 function Login(props) {
 	const [email, setEmail] = useState("");
@@ -12,7 +12,6 @@ function Login(props) {
 	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [successfulLogin, setSuccessfulLogin] = useState("");
-
 	// eslint-disable-next-line
 	const navigate = useNavigate();
 
@@ -27,8 +26,8 @@ function Login(props) {
 				setEmailError("Please enter your email");
 				return;
 			}
-
-			if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+			
+			if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
 				setEmailError("Please enter a valid email");
 				return;
 			}
@@ -45,7 +44,7 @@ function Login(props) {
 
 			if (foundUser) {
 				setSuccessfulLogin("Login successful!");
-				const path = "/Homepage";
+				const path = "/homepage";
 				navigate(path);
 				// Store any user data or tokens if available
 			} else {

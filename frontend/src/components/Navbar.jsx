@@ -12,7 +12,7 @@ export default function MyNav() {
                 <img src={FilmFlixLogo} alt="Logo" />
 
                 <div className='nav-link'>
-                    <Link to="/home">HOME</Link>
+                    <Link to="/homepage">HOME</Link>
                 </div>
 
                 <div className='nav-link'>
@@ -27,7 +27,7 @@ export default function MyNav() {
 
             <div className='menu-items-right'>
                 <div className='profile-btn'>
-                    <Link to="/profile">PROFILE</Link>
+                    <Link to="/usersite">PROFILE</Link>
                 </div>
             </div>
 
