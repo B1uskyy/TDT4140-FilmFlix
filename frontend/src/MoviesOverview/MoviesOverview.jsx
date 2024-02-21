@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './MoviesOverview.css'; // Importer CSS-filen
+import RESTFetcher from '../helpers/RESTFetcher';
 
 const movies = [
   { title: 'Ponyo', director: 'Director 1', year: 2021, imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTc3YmM3N2QtODZkMC00ZDE5LThjMTQtYTljN2Y1YTYwYWJkXkEyXkFqcGdeQXVyODEzNjM5OTQ@._V1_FMjpg_UX1000_.jpg' },
@@ -23,9 +24,14 @@ const movies = [
 
 const MoviesOverview = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredMovies, setFilteredMovies] = useState(movies);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [showFilters, setShowFilters] = useState(false); // Tilstand for å kontrollere visningen av filterboksene
+  const [movies, setMovies] = useState([]); // Tilstand for å lagre filmene som hentes fra backend
+
+  RESTFetcher.fetchMovies().then((movies) => {
+    setMovies(movies);
+  });
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -75,11 +81,11 @@ const MoviesOverview = () => {
         )}
       </div>
       <div className="movies-container">
-        {filteredMovies.map((movie, index) => (
+        {movies.map((movie, index) => (
           <div className="movie" key={index}>
-            <img src={movie.imageUrl} alt={movie.title} />
+            <img src={movie.posterURL} alt={movie.title} />
             <h2>{movie.title}</h2>
-            <p>Director: {movie.director}</p>
+            <p>Poster url {movie.posterURL}</p>
             <p>Year: {movie.year}</p>
           </div>
         ))}
