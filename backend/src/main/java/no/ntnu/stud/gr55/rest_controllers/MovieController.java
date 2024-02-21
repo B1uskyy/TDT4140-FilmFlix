@@ -56,4 +56,9 @@ public class MovieController {
 
         return movie;
     }
+
+    @GetMapping("/movies/genres")
+    public List<String> getGenres() {
+        return movieRepository.getDistinctGenres();
+    }
 }
