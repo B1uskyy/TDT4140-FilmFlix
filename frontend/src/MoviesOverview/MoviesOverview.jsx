@@ -2,25 +2,7 @@ import React, { useState } from 'react';
 import './MoviesOverview.css'; // Importer CSS-filen
 import RESTFetcher from '../helpers/RESTFetcher';
 
-const movies = [
-  { title: 'Ponyo', director: 'Director 1', year: 2021, imageUrl: 'https://m.media-amazon.com/images/M/MV5BOTc3YmM3N2QtODZkMC00ZDE5LThjMTQtYTljN2Y1YTYwYWJkXkEyXkFqcGdeQXVyODEzNjM5OTQ@._V1_FMjpg_UX1000_.jpg' },
-  { title: 'Spirited Away', director: 'Director 2', year: 2022, imageUrl: 'https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg' },
-  { title: 'Movie 3', director: 'Director 3', year: 2023, imageUrl: 'https://m.media-amazon.com/images/M/MV5BYzJjMTYyMjQtZDI0My00ZjE2LTkyNGYtOTllNGQxNDMyZjE0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg' },
-  { title: 'Movie 1', director: 'Director 1', year: 2021, imageUrl: 'https://m.media-amazon.com/images/M/MV5BMTU4NDg0MzkzNV5BMl5BanBnXkFtZTgwODA3Mzc1MDE@._V1_.jpg' },
-  { title: 'Movie 2', director: 'Director 2', year: 2022, imageUrl: 'https://m.media-amazon.com/images/M/MV5BNmI2MzJkYzYtM2Y2My00NmJmLTgxZDAtODAwNjBmM2RlZjRhXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg' },
-  { title: 'Movie 3', director: 'Director 3', year: 2023, imageUrl: 'https://m.media-amazon.com/images/M/MV5BZjZkNThjNTMtOGU0Ni00ZDliLThmNGUtZmMxNWQ3YzAxZTQ1XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_FMjpg_UX1000_.jpg' },
-  { title: 'Movie 1', director: 'Director 1', year: 2021, imageUrl: 'https://via.placeholder.com/150' },
-  { title: 'Movie 2', director: 'Director 2', year: 2022, imageUrl: 'https://via.placeholder.com/150' },
-  { title: 'Movie 3', director: 'Director 3', year: 2023, imageUrl: 'https://via.placeholder.com/150' },
-  { title: 'Movie 1', director: 'Director 1', year: 2021, imageUrl: 'https://via.placeholder.com/150' },
-  { title: 'Movie 2', director: 'Director 2', year: 2022, imageUrl: 'https://via.placeholder.com/150' },
-  { title: 'Movie 3', director: 'Director 3', year: 2023, imageUrl: 'https://via.placeholder.com/150' },
-  { title: 'Movie 3', director: 'Director 3', year: 2023, imageUrl: 'https://via.placeholder.com/150' },
-  { title: 'Movie 3', director: 'Director 3', year: 2023, imageUrl: 'https://via.placeholder.com/150' },
-  { title: 'Movie 3', director: 'Director 3', year: 2023, imageUrl: 'https://via.placeholder.com/150' },
-  
-  //Can add more movies here
-];
+
 
 const MoviesOverview = () => {
   const [searchTerm, setSearchTerm] = useState('');
