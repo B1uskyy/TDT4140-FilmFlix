@@ -1,0 +1,44 @@
+/* FilmCard.css */
+
+.film-card {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+  
+img.film-card {
+    display: flex;
+    max-width: 450px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+  
+h2.film-card {
+    background: rgb(51, 2, 7);
+    display: flex;
+    float: center;
+    font-size: 4rem;
+    margin-bottom: 10px;
+    color: cornsilk;
+}
+  
+p.film-card {
+    float: center;
+    margin-bottom: 5px;
+    color: cornsilk
+}
+.film-card-content {
+    float: center;
+    margin-bottom: 10px;
+    color: cornsilk;
+}
+
+.film-card-container {
+    background-color: #590e0e; 
+    padding: 35px; 
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+}
