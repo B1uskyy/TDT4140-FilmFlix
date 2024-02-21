@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -26,11 +27,15 @@ public class MovieController {
     private String omdbApiKey;
 
     @GetMapping("/movies")
-    public List<Movie> getMovies() {
-        Sort sort = Sort.by("year").descending(); // primitive sort for first release
-        Pageable pageable = PageRequest.of(0, 10, sort);
+    public List<Movie> getMovies(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                @RequestParam(name = "genre", required = false) String genre,
+                                 @RequestParam(name = "year", required = false) Integer year,
+                                 @RequestParam(name = "director", required = false) String director) {
 
-        return movieRepository.findAll(pageable).getContent();
+        Sort sort = Sort.by("year").descending(); // primitive sort for first release
+        Pageable pageable = PageRequest.of(page, 25, sort);
+
+        return movieRepository.findMoviesFiltered(year, director, genre, pageable).getContent();
     }
 
     @GetMapping("/movies/search/{title}")
