@@ -12,6 +12,10 @@ class Movie {
         this.writers = writers;
         this.imdbVotes = imdbVotes;
     }
+
+    static empty(){
+        return new Movie(-1, "", -1, -1, [], "", "", [], [], -1);
+    } 
 }
 
 class Crew {
