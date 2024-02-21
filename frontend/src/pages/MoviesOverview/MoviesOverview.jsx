@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './MoviesOverview.css'; // Importer CSS-filen
-import RESTFetcher from '../helpers/RESTFetcher';
+import RESTFetcher from '../../helpers/RESTFetcher';
 
 const MoviesOverview = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [showFilters, setShowFilters] = useState(false); // Tilstand for å kontrollere visningen av filterboksene
   const [movies, setMovies] = useState([]); // Tilstand for å lagre filmene som hentes fra backend
 
-  RESTFetcher.fetchMovies().then((movies) => {
-    setMovies(movies);
-  });
+  useEffect(() => {
+    RESTFetcher.fetchMovies().then((movies) => {
+        setMovies(movies); // TODO - add filter options
+    });
+  }, [searchTerm, selectedGenres]);
+
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -35,7 +37,7 @@ const MoviesOverview = () => {
       movie.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedGenres.length === 0 || movie.genres.some(genre => selectedGenres.includes(genre)))
     );
-    setFilteredMovies(filtered);
+    // setFilteredMovies(filtered);
     setShowFilters(false); // Skjul filterboksene etter filtrering
   };
 
