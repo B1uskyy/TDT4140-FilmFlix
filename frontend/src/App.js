@@ -17,7 +17,7 @@ function App() {
 					<Route path="/login" exact={true} element={<Login />} />
 					<Route path="/homepage" element={<Homepage />}></Route>
 					<Route path="/usersite" element={<UserSite />}></Route>
-					<Route path="/moviecard" element={<MovieCard />}></Route>
+					<Route path="/moviecard/:id" element={<MovieCard />}></Route>
 					<Route path="/movies" element={<Movies />}></Route>
 				</Routes>
 			</Router>

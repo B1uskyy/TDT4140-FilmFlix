@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import '../styles/movies.css'; // Importer CSS-filen
 import RESTFetcher from '../helpers/RESTFetcher';
 import Navbar from "../components/Navbar.jsx";
@@ -10,9 +10,12 @@ const Movies = () => {
   const [showFilters, setShowFilters] = useState(false); // Tilstand for å kontrollere visningen av filterboksene
   const [movies, setMovies] = useState([]); // Tilstand for å lagre filmene som hentes fra backend
 
-  RESTFetcher.fetchMovies().then((movies) => {
-    setMovies(movies);
-  });
+  useEffect(() => {
+    RESTFetcher.fetchMovies().then((movies) => {
+      setMovies(movies); // TODO - add filter options
+    });
+  }, [searchTerm, selectedGenres]);
+
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);

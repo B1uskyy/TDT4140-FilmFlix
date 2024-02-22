@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
 import { useParams } from 'react-router-dom';
 import "../styles/moviecard.css" 
 import RESTFetcher from "../helpers/RESTFetcher";
@@ -11,9 +11,12 @@ function MovieCard(){
 
     const [movie, setMovie] = useState(Movie.empty());
 
-    RESTFetcher.fetchMovie(params.id).then((movie) => {
-        setMovie(movie);
-    })
+    useEffect(() => {
+        RESTFetcher.fetchMovie(params.id).then((movie) => {
+            setMovie(movie);
+        })
+    }, []);
+
 
     return (
         <div>
