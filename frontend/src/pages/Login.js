@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./../styles/login.css";
 import posters from "./../img/posters.jpg";
 import users from "./../data/users.json";
+import FilmFlixLogo from "../img/FilmFlixLogo.svg";
 
 // import Logo from "./../components/Logo";æ
 
@@ -92,13 +93,10 @@ function Login(props) {
 			</div>
 			<div className="rightSide">
 				{/* <Logo /> */}
-				<h1 className="filmFlixTitle">FilmFlix</h1>
-				<div className={"titleContainer"}>
-					<div>Login</div>
-				</div>
-				<br />
+				<img src={FilmFlixLogo} alt="Logo" className="filmFlixLogo" />
 				<div className={"inputContainer"}>
 					<p className="inputTitle">Username</p>
+					<br />
 					<input
 						value={email}
 						placeholder="Enter your email here"
@@ -110,6 +108,7 @@ function Login(props) {
 				<br />
 				<div className={"inputContainer"}>
 					<p className="inputTitle">Password</p>
+					<br />
 					<input
 						type="password"
 						value={password}
@@ -127,13 +126,12 @@ function Login(props) {
 						onClick={onButtonClick}
 						value={"Enter FilmFlix"}
 					/>
-					<a href="/register" className="signupLink">
+					<label className="successfulLogin">{successfulLogin}</label>
+				</div>
+				<a href="/register" className="signupLink">
 						{" "}
 						New user? Sign up
 					</a>
-					<label className="successfulLogin">{successfulLogin}</label>
-				</div>
-				<h3 className="filmFlixFooterLogo"> FilmFlix</h3>
 			</div>
 		</div>
 	);
