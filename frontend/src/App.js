@@ -19,6 +19,7 @@ function App() {
 					<Route path="/user" element={<UserSite />}></Route>
 					<Route path="/movies/:id" element={<MovieCard />}></Route>
 					<Route path="/movies" element={<Movies />}></Route>
+					<Route path="/search/:query" element={<Movies />}></Route>
 				</Routes>
 			</Router>
 		</div>

@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface MovieRepository extends ListCrudRepository<Movie, String>, PagingAndSortingRepository<Movie, String> {
     public List<Movie> findByTitle(String title);
-    public List<Movie> findByTitleContainingIgnoreCase(String title);
+    public Page<Movie> findByTitleContainingIgnoreCase(String title, Pageable page);
 
     @Cacheable("genres")
     @Query("SELECT DISTINCT elements(m.genres) FROM Movie m")
@@ -23,12 +23,14 @@ public interface MovieRepository extends ListCrudRepository<Movie, String>, Pagi
             "(:director IS NULL OR :director MEMBER OF m.directors) AND " +
             "(:genre IS NULL OR :genre MEMBER OF m.genres) AND" +
             "(:actor IS NULL OR :actor MEMBER OF m.actors) AND" +
-            "(:writer IS NULL OR :writer MEMBER OF m.writers)")
+            "(:writer IS NULL OR :writer MEMBER OF m.writers) AND" +
+            "(:search IS NULL OR lower(m.title) LIKE lower(concat('%', :search, '%')))")
     Page<Movie> findMoviesFiltered(@Param("year") Integer year,
              @Param("director") String director,
               @Param("genre") String genre,
                @Param("actor") String actor,
                @Param("writer") String writer,
+               @Param("search") String search,
                Pageable page);
 
     @Query("SELECT DISTINCT elements(m.directors) FROM Movie m")

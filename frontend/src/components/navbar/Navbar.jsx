@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import FilmFlixLogo from '../../img/FilmFlixLogo.svg';
 import './navbar.css';
+import SearchBar from "../searchbar/SearchBar";
 
 export default function MyNav() {  
 
@@ -20,10 +21,8 @@ export default function MyNav() {
                 </div>
 
             </div>
-            <div className="search-bar">
-                <input type="text" placeholder='Search on FilmFlix...' ></input>
-                <button className='searchbtn'>Search</button>
-            </div>
+
+            <SearchBar/>
 
             <div className='menu-items-right'>
                 <div className='profile-btn'>

@@ -15,7 +15,7 @@ function MovieCard(){
         RESTFetcher.fetchMovie(params.id).then((movie) => {
             setMovie(movie);
         })
-    }, []);
+    }, [params.id]);
 
 
     return (

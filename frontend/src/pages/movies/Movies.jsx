@@ -10,6 +10,8 @@ import FilterBlock from "./components/FilterBlock";
 
 const Movies = () => {
 
+    const params = useParams();
+
   const [movies, setMovies] = useState([]); // Tilstand for å lagre filmene som hentes fra backend
   const [loading, setLoading] = useState(true);
 
@@ -27,13 +29,14 @@ const Movies = () => {
 
   useEffect(() => {
         setLoading(true);
-        RESTFetcher.fetchMovies(selectedGenre, selectedActor, selectedDirector, selectedWriter).then((movies) => {
+        RESTFetcher.fetchMovies(params.query, selectedGenre, selectedActor, selectedDirector, selectedWriter).then((movies) => {
           setMovies(movies); // TODO - add filter options
           setLoading(false);
         });
-  }, [selectedGenre, selectedActor, selectedWriter, selectedDirector]);
+  }, [selectedGenre, selectedActor, selectedWriter, selectedDirector, params.query]);
 
     useEffect(() => {
+
         RESTFetcher.fetchGenres().then((genres) => {
             setAvailableGenres(genres);
         });
@@ -69,7 +72,7 @@ const Movies = () => {
             ) : (
                 <div className="movies-container">
                   {movies.map((movie, index) => (
-                      <Link to={movie.id} className="movie" key={index}>
+                      <Link to={"/movies/"+ movie.id} className="movie" key={index}>
                         <div className="movie-block">
                           <img className="movie-poster" src={
                             movie.posterURL === "N/A" ? "https://via.placeholder.com/300" : movie.posterURL
@@ -77,7 +80,7 @@ const Movies = () => {
                           <div className="movie-info">
                             <h2>{movie.title}</h2>
                             <p>{movie.year}</p>
-                            <p>{movie.genres.join(' | ')}</p>
+                            <p>{(movie.genres !== null) ? movie.genres.join(' | ') : ""}</p>
                           </div>
                         </div>
                       </Link>

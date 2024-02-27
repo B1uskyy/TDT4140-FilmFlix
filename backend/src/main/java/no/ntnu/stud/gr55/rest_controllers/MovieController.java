@@ -34,38 +34,34 @@ public class MovieController {
                                  @RequestParam(name = "year", required = false) Integer year,
                                  @RequestParam(name = "director", required = false) String director,
                                 @RequestParam(name = "actor", required = false) String actor,
-                                @RequestParam(name = "writer", required = false) String writer
+                                @RequestParam(name = "writer", required = false) String writer,
+                                 @RequestParam(name = "search", required = false) String search
     ) {
+
+        if (search != null) {
+            OMDBSearch omdbSearch = OMDBFetch.fetchSearch(omdbApiKey, search);
+            if (omdbSearch != null && omdbSearch.getResponse()) {
+                omdbSearch.search.forEach(movie -> {
+                    if (movieRepository.findById(movie.getImdbId()).isEmpty()) {
+                        Movie asMovieObject = movie.toMovie(false);
+                        if (asMovieObject != null) {
+                            movieRepository.save(asMovieObject);
+                        }
+                    }
+                });
+            }
+        }
 
         Sort sort = Sort.by("imdbVotes").descending(); // primitive sort for first release
         Pageable pageable = PageRequest.of(page, 25, sort);
 
-        return movieRepository.findMoviesFiltered(year, director, genre, actor, writer, pageable).getContent();
+        return movieRepository.findMoviesFiltered(year, director, genre, actor, writer, search, pageable).getContent();
     }
 
-    @GetMapping("/movies/search/{title}")
+    @GetMapping("/movies/autocomplete/{title}")
     public List<Movie> getMoviesByTitle(@PathVariable("title") String title) {
-        OMDBSearch search = OMDBFetch.fetchSearch(omdbApiKey, title);
-        if (search == null || !search.getResponse()) {
-            System.out.println("OMDB search failed");
-            return movieRepository.findByTitleContainingIgnoreCase(title);
-        }
-
-        search.search.forEach(movie -> {
-            if (movieRepository.findById(movie.getImdbId()).isEmpty()) {
-                Movie asMovieObject = movie.toMovie(false);
-
-                if (asMovieObject != null) {
-                    movieRepository.save(asMovieObject);
-                }
-                else{
-                    System.out.println("Failed to convert OMDB movie to Movie object");
-                    System.out.println("OMDB movie: " + movie.toString());
-                }
-            }
-        });
-
-        return movieRepository.findByTitleContainingIgnoreCase(title);
+        Pageable topFive = PageRequest.of(0, 5);
+        return movieRepository.findByTitleContainingIgnoreCase(title, topFive).getContent();
     }
 
     @GetMapping("/movies/view/{id}")

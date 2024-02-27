@@ -14,24 +14,16 @@ nav {
     justify-content: space-between;
     position: sticky;
     top: 0;
+    z-index: 2;
 }
 
 .menu-items {
     min-width: 300px;
     display: flex;
     align-items: center;
+
     padding-left: 10px;
     justify-content: space-between;
-}
-
-.search-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.searchbtn {
-    margin-left: 10px;
 }
 
 .menu-items div:hover {
