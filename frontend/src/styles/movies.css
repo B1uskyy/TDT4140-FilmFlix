@@ -1,32 +1,4 @@
-
-.pathway-gothic one-regular {
-  font-family: "Pathway Gothic One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-
-.movies-container {
-  display: flex;
-  flex-wrap: wrap;
-  background-color: #6B2C2C;
-  padding: 20px;
-  gap: 20px; /* Gir litt mellomrom mellom hver film */
-}
-
-.movie {
-  flex: 1;
-  min-width: 200px; /* Minimumsbredde for hver filmvisning */
-  background-color: #fff; /* Legger til en bakgrunnsfarge for å skille boksene */
-  padding: 10px; /* Litt padding rundt innholdet */
-  border-radius: 5px; /* Runde hjørner for estetikk */
-}
-
-.movies-overview-container {
-  background-color: #6B2C2C; /* Hele komponentens bakgrunnsfarge */
-  padding: 20px; /* Juster etter behov for å unngå hvitt mellomrom */
-}  
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 .search-container {
   display: flex;
@@ -44,19 +16,6 @@ search-container h1 {
   margin-right: 40px; /* Justerer mellomrommet til høyre for søkefeltet */
 }
 
-.movie img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-   /* Runde hjørner på bildet */
-}
-
-/* Tilpasser teksten og bildene inne i hver film-boks */
-.movie h2, .movie p {
-  margin: 5px 0; 
-  /* Litt mellomrom mellom tekstene */
-}
-
 .search-and-filter {
   display: flex;
   gap: 10px; /* Gir litt mellomrom mellom søkefeltet og filterknappen */
@@ -66,7 +25,78 @@ search-container h1 {
 .search-container h1 {
   font-size: 50px; /* Eller hvilken som helst annen størrelse */
   color: rgb(250, 249, 249); /* Eller hvilken som helst annen farge */
+}
 
+.movies-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  font-family: 'Montserrat', sans-serif;
+
+  justify-content: space-evenly;
+}
+
+.movie {
+  display: flex;
+  width: 13em;
+
+  margin-top: 1em;
+}
+
+.movie-block {
+  position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 
+.movie-block img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.2s ease;
+}
+
+.movie-info{
+  position: absolute;
+  /*visibility: hidden;*/
+
+  bottom: 0;
+  left: 0;
+
+  font-family: 'Montserrat', sans-serif;
+
+  display: flex;
+  flex-direction: column;
+
+  flex-wrap: wrap;
+  /*justify-content: end;*/
+
+  word-break: break-word;
+
+  padding: 0.5em;
+
+  background-color: rgba(0,0,0, 0.7);
+  width: 100%;
+
+  min-height: 4em;
+
+}
+
+.movie-info p {
+  font-size: 0.8em;
+}
+
+.movie-info h2{
+  font-size: 1em;
+
+  font-family: 'Montserrat', sans-serif;
+}
+
+.movie-block:hover img {
+  transition: 0.2s ease;
+  filter: blur(5px);
+
+}

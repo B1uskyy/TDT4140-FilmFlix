@@ -12,7 +12,7 @@ export default function MyNav() {
                 <img src={FilmFlixLogo} alt="Logo" />
 
                 <div className='nav-link'>
-                    <Link to="/homepage">HOME</Link>
+                    <Link to="/">HOME</Link>
                 </div>
 
                 <div className='nav-link'>

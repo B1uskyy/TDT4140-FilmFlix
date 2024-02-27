@@ -26,7 +26,7 @@ function MovieCard(){
                     <img className="movie-card" src = {movie.posterURL}/>
                 </div>
                 
-                <div className = "movie-card-content">
+                <div className="movie-card-content">
                     <h2 className="movie-card"> {movie.title}</h2>
                     <p className="movie-card"> {movie.description}</p>
                     <p className = "movie-card"> {movie.genres} </p>
