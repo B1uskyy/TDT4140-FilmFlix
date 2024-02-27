@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react"
 import { useParams } from 'react-router-dom';
-import "../styles/moviecard.css" 
-import RESTFetcher from "../helpers/RESTFetcher";
-import { Movie } from "../helpers/BackendEntities";
-import Navbar from "../components/Navbar.jsx";
+import "./moviecard.css"
+import RESTFetcher from "../../helpers/RESTFetcher";
+import { Movie } from "../../helpers/BackendEntities";
+import Navbar from "../../components/navbar/Navbar.jsx";
 
 function MovieCard(){
 

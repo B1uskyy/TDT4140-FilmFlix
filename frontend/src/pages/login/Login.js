@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./../styles/login.css";
-import posters from "./../img/posters.jpg";
-import users from "./../data/users.json";
-import FilmFlixLogo from "../img/FilmFlixLogo.svg";
+import "./login.css";
+import posters from "../../img/posters.jpg";
+import users from "../../data/users.json";
+import FilmFlixLogo from "../../img/FilmFlixLogo.svg";
 
 // import Logo from "./../components/Logo";æ
 

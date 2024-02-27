@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import FilmFlixLogo from '../img/FilmFlixLogo.svg';
-import '../styles/navbar.css';
+import FilmFlixLogo from '../../img/FilmFlixLogo.svg';
+import './navbar.css';
 
 export default function MyNav() {  
 
@@ -27,7 +27,7 @@ export default function MyNav() {
 
             <div className='menu-items-right'>
                 <div className='profile-btn'>
-                    <Link to="/usersite">PROFILE</Link>
+                    <Link to="/user">PROFILE</Link>
                 </div>
             </div>
 

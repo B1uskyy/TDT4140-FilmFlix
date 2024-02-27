@@ -1,7 +1,7 @@
 import React from "react";
-import "../styles/usersite.css";
-import Navbar from "../components/Navbar.jsx";
-import userImage from "../img/Johanpfp.jpg"
+import "./usersite.css";
+import Navbar from "../../components/navbar/Navbar.jsx";
+import userImage from "../../img/Johanpfp.jpg"
 
 function UserSite() {
 
