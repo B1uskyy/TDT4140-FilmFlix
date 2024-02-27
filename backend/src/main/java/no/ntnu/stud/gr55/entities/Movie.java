@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.Set;
 
-import no.ntnu.stud.gr55.utils.OMDBFetch;
-import no.ntnu.stud.gr55.utils.OMDBObject;
+import no.ntnu.stud.gr55.utils.omdb.OMDBFetch;
+import no.ntnu.stud.gr55.utils.omdb.OMDBMovie;
 
 /**
  * Class describing movie entities
@@ -18,6 +18,8 @@ public class Movie {
     private String id;
 
     private String title; // using primaryTitle from https://developer.imdb.com/non-commercial-datasets/
+
+    @Column(name = "movie_year") // h2 does not like year as name
     private int year;
 
     @Column(nullable = true)
@@ -25,11 +27,14 @@ public class Movie {
 
     private String posterUrl;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<Crew> directors;
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    private List<String> directors;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<Crew> writers;
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    private List<String> writers;
+
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    private List<String> actors;
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     private List<String> genres;
@@ -38,6 +43,8 @@ public class Movie {
 
     @Column(nullable = true)
     private Integer imdbVotes;
+
+    private boolean detailsFetched = false;
 
     public String getTitle() {
         return title;
@@ -63,19 +70,19 @@ public class Movie {
         this.runtimeMinutes = runtimeMinutes;
     }
 
-    public Set<Crew> getDirectors() {
+    public List<String> getDirectors() {
         return directors;
     }
 
-    public void setDirectors(Set<Crew> directors) {
+    public void setDirectors(List<String> directors) {
         this.directors = directors;
     }
 
-    public Set<Crew> getWriters() {
+    public List<String> getWriters() {
         return writers;
     }
 
-    public void setWriters(Set<Crew> writers) {
+    public void setWriters(List<String> writers) {
         this.writers = writers;
     }
 
@@ -118,41 +125,19 @@ public class Movie {
         this.imdbVotes = imdbVotes;
     }
 
-    public boolean attemptPopulateMissingOMDB(String omdbApiKey) {
-        if (omdbApiKey == null) {
-            System.out.println("OMDB API key not set.");
-            return false;
-        }
+    public boolean isDetailsFetched() {
+        return detailsFetched;
+    }
 
-        if (!(this.posterUrl == null || this.description == null || this.imdbVotes == null)) {
-            System.out.println("OMDB data for " + this.title + " already fetched.");
-            return false;
-        }
-        System.out.println("Fetching missing OMDB data for " + this.title + "...");
+    public void setDetailsFetched(boolean detailsFetched) {
+        this.detailsFetched = detailsFetched;
+    }
 
-        OMDBObject omdbObject = OMDBFetch.fetchMovie(omdbApiKey, this.id);
+    public List<String> getActors() {
+        return actors;
+    }
 
-        if (omdbObject == null) {
-            System.out.println("Failed fetching missing OMDB data for " + this.title + ".");
-            return false;
-        }
-
-        if (getPosterUrl() == null) {
-            setPosterUrl(omdbObject.getPoster());
-            System.out.println("Fetched poster for " + this.title + " successfully.");
-        }
-
-        if (getDescription() == null) {
-            setDescription(omdbObject.getDescription());
-            System.out.println("Fetched description for " + this.title + " successfully.");
-        }
-
-        if (getImdbVotes() == null) {
-            setImdbVotes(omdbObject.getImdbVotes());
-            System.out.println("Fetched IMDB votes for " + this.title + " successfully.");
-        }
-
-        return true;
-
+    public void setActors(List<String> actors) {
+        this.actors = actors;
     }
 }

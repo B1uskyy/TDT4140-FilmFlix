@@ -20,7 +20,7 @@ public interface MovieRepository extends ListCrudRepository<Movie, String>, Pagi
     public List<String> getDistinctGenres();
 
     @Query("SELECT m FROM Movie m WHERE (:year IS NULL OR m.year = :year) AND " +
-            "(:director IS NULL OR EXISTS (SELECT 1 FROM m.directors d WHERE d.id = :director)) AND " +
+            "(:director IS NULL OR :director MEMBER OF m.directors) AND " +
             "(:genre IS NULL OR :genre MEMBER OF m.genres)")
     Page<Movie> findMoviesFiltered(@Param("year") Integer year,
              @Param("director") String director,

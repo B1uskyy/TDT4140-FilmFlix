@@ -1,8 +1,8 @@
 import React from "react";
-import "../styles/homepage.css"
-import ponyo from "../img/ponyo.jpg"
-import totoro from "../img/totoro.jpg"
-import Navbar from "../components/Navbar.jsx"
+import "./homepage.css"
+import ponyo from "../../img/ponyo.jpg"
+import totoro from "../../img/totoro.jpg"
+import Navbar from "../../components/navbar/Navbar.jsx"
 
 function Homepage() {
     return (

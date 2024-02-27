@@ -1,4 +1,4 @@
-import {Movie, Crew} from './BackendEntities'
+import {Movie} from './BackendEntities'
 
 class RESTFetcher {
     static url = "http://localhost:8080/api/"
@@ -18,8 +18,6 @@ class RESTFetcher {
     static jsonToMovie(json) {
         console.log("json: " + json)
 
-        const directors = json.directors.map(director => this.jsonToCrew(director));
-        const writers = json.writers.map(writer => this.jsonToCrew(writer));
 
         return new Movie(
             json.id,
@@ -29,18 +27,9 @@ class RESTFetcher {
             json.genres,
             json.posterUrl,
             json.description,
-            directors,
-            writers,
+            json.directors,
+            json.writers,
             json.imdbVotes
-        );
-    }
-
-    static jsonToCrew(json) {
-        return new Crew(
-            json.id,
-            json.name,
-            json.birthYear,
-            json.deathYear
         );
     }
 
