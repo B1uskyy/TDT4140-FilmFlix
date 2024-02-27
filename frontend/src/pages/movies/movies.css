@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+.movies-overview-container{
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (orientation:portrait) {
+    .movies-overview-container {
+        flex-direction: column;
+    }
+}
+
 .search-container {
   display: flex;
   align-items: center;
@@ -25,6 +36,17 @@ search-container h1 {
 .search-container h1 {
   font-size: 50px; /* Eller hvilken som helst annen størrelse */
   color: rgb(250, 249, 249); /* Eller hvilken som helst annen farge */
+}
+
+.movies-filter-container{
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  min-width: 20%;
+
+  margin: 1em;
 }
 
 .movies-container {
@@ -77,6 +99,8 @@ search-container h1 {
   word-break: break-word;
 
   padding: 0.5em;
+
+  color:  var(--off-white);
 
   background-color: rgba(0,0,0, 0.7);
   width: 100%;

@@ -15,6 +15,10 @@ class RESTFetcher {
 
     static urlGenres = this.urlMovies + "/genres"
 
+    static urlDirectors = this.urlMovies + "/directors"
+    static urlWriters = this.urlMovies + "/writers"
+    static urlActors = this.urlMovies + "/actors"
+
     static jsonToMovie(json) {
         console.log("json: " + json)
 
@@ -29,6 +33,7 @@ class RESTFetcher {
             json.description,
             json.directors,
             json.writers,
+            json.actors,
             json.imdbVotes
         );
     }
@@ -37,9 +42,24 @@ class RESTFetcher {
      * Fetches all (upto 10) movies from the backend
      * @returns {Promise<*|*[]>} A promise with a list of all movies from the backend
      */
-    static async fetchMovies() {
+    static async fetchMovies(genres = null, actors = null, directors = null, writers = null) {
+        let url = this.urlMovies + "?"
+        if (genres !== null){
+            url += "&genre=" + genres
+        }
+        if (actors !== null){
+            url += "&actor=" + actors
+        }
+        if (directors !== null){
+            url += "&director=" + directors
+        }
+        if (writers !== null){
+            url += "&writer=" + writers
+        }
+
+
         try{
-            const response = await fetch(this.urlMovies, {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -108,10 +128,9 @@ class RESTFetcher {
         }
     }
 
-    static async fetchGenres() {
-        console.log("Genres url: " + this.urlGenres)
+    static async fetchJSON(url) {
         try{
-            const response = await fetch(this.urlGenres, {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -129,6 +148,23 @@ class RESTFetcher {
             return []
         }
     }
+
+    static async fetchGenres() {
+        return await this.fetchJSON(this.urlGenres);
+    }
+
+    static async fetchDirectors() {
+        return await this.fetchJSON(this.urlDirectors);
+    }
+
+    static async fetchWriters() {
+        return await this.fetchJSON(this.urlWriters);
+    }
+
+    static async fetchActors() {
+        return await this.fetchJSON(this.urlActors);
+    }
+
 }
 
 export default RESTFetcher;

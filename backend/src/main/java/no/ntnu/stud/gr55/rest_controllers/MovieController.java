@@ -32,12 +32,15 @@ public class MovieController {
     public List<Movie> getMovies(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                 @RequestParam(name = "genre", required = false) String genre,
                                  @RequestParam(name = "year", required = false) Integer year,
-                                 @RequestParam(name = "director", required = false) String director) {
+                                 @RequestParam(name = "director", required = false) String director,
+                                @RequestParam(name = "actor", required = false) String actor,
+                                @RequestParam(name = "writer", required = false) String writer
+    ) {
 
         Sort sort = Sort.by("imdbVotes").descending(); // primitive sort for first release
         Pageable pageable = PageRequest.of(page, 25, sort);
 
-        return movieRepository.findMoviesFiltered(year, director, genre, pageable).getContent();
+        return movieRepository.findMoviesFiltered(year, director, genre, actor, writer, pageable).getContent();
     }
 
     @GetMapping("/movies/search/{title}")
@@ -95,4 +98,20 @@ public class MovieController {
     public List<String> getGenres() {
         return movieRepository.getDistinctGenres();
     }
+
+    @GetMapping("/movies/directors")
+    public List<String> getDirectors() {
+        return movieRepository.getDistinctDirectors();
+    }
+
+    @GetMapping("/movies/actors")
+    public List<String> getActors() {
+        return movieRepository.getDistinctActors();
+    }
+
+    @GetMapping("/movies/writers")
+    public List<String> getWriters() {
+        return movieRepository.getDistinctWriters();
+    }
+
 }

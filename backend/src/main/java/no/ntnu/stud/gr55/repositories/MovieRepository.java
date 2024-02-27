@@ -21,9 +21,21 @@ public interface MovieRepository extends ListCrudRepository<Movie, String>, Pagi
 
     @Query("SELECT m FROM Movie m WHERE (:year IS NULL OR m.year = :year) AND " +
             "(:director IS NULL OR :director MEMBER OF m.directors) AND " +
-            "(:genre IS NULL OR :genre MEMBER OF m.genres)")
+            "(:genre IS NULL OR :genre MEMBER OF m.genres) AND" +
+            "(:actor IS NULL OR :actor MEMBER OF m.actors) AND" +
+            "(:writer IS NULL OR :writer MEMBER OF m.writers)")
     Page<Movie> findMoviesFiltered(@Param("year") Integer year,
              @Param("director") String director,
               @Param("genre") String genre,
+               @Param("actor") String actor,
+               @Param("writer") String writer,
                Pageable page);
+
+    @Query("SELECT DISTINCT elements(m.directors) FROM Movie m")
+    public List<String> getDistinctDirectors();
+    @Query("SELECT DISTINCT elements(m.actors) FROM Movie m")
+    public List<String> getDistinctActors();
+
+    @Query("SELECT DISTINCT elements(m.writers) FROM Movie m")
+    public List<String> getDistinctWriters();
 }
