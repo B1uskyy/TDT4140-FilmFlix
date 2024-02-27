@@ -34,6 +34,9 @@ public class Movie {
     private List<String> writers;
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    private List<String> actors;
+
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     private List<String> genres;
 
     private String description;
@@ -128,5 +131,13 @@ public class Movie {
 
     public void setDetailsFetched(boolean detailsFetched) {
         this.detailsFetched = detailsFetched;
+    }
+
+    public List<String> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<String> actors) {
+        this.actors = actors;
     }
 }

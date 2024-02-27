@@ -70,11 +70,14 @@ public class MovieController {
         Movie movie = movieRepository.findById(id).orElse(null);
 
         if (movie == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found.");
-        }
+            var fetch = OMDBFetch.fetchMovie(omdbApiKey, id);
+            if (fetch == null){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found.");
+            }
 
-        Hibernate.initialize(movie.getDirectors());
-        Hibernate.initialize(movie.getWriters());
+            movie = fetch.toMovie(true);
+            movieRepository.save(movie);
+        }
 
         if (!movie.isDetailsFetched()) {
             var fetch = OMDBFetch.fetchMovie(omdbApiKey, movie.getId());

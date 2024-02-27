@@ -38,6 +38,9 @@ public class OMDBMovie {
     @JsonProperty("Genre")
     private String genres;
 
+    @JsonProperty("Actors")
+    private String actors;
+
     @JsonProperty("imdbVotes")
     private String imdbVotesString;
 
@@ -135,6 +138,10 @@ public class OMDBMovie {
         return parseCSV(director);
     }
 
+    private List<String> parseActors() {
+        return parseCSV(actors);
+    }
+
     public String getImdbId() {
         return imdbId;
     }
@@ -179,11 +186,12 @@ public class OMDBMovie {
         movie.setDetailsFetched(false);
 
         if (includeDetails) {
-            movie.setDirectors(parseDirectors());
-            movie.setWriters(parseWriters());
+            movie.setDirectors(new ArrayList<>(parseDirectors()));
+            movie.setWriters(new ArrayList<>(parseWriters()));
+            movie.setGenres(new ArrayList<>(parseGenres()));
+            movie.setActors(new ArrayList<>(parseActors()));
             movie.setDescription(description);
             movie.setImdbVotes(getImdbVotes());
-            movie.setGenres(parseGenres());
             movie.setDetailsFetched(true);
         }
 
@@ -213,6 +221,7 @@ public class OMDBMovie {
         movie.setDescription(description);
         movie.setImdbVotes(getImdbVotes());
         movie.setGenres(new ArrayList<>(parseGenres()));
+        movie.setActors(new ArrayList<>(parseActors()));
         movie.setDetailsFetched(true);
     }
 
@@ -238,5 +247,13 @@ public class OMDBMovie {
 
     public void setGenres(String genres) {
         this.genres = genres;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public void setActors(String actors) {
+        this.actors = actors;
     }
 }
