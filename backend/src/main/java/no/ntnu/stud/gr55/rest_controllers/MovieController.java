@@ -2,6 +2,8 @@ package no.ntnu.stud.gr55.rest_controllers;
 
 import no.ntnu.stud.gr55.entities.Movie;
 import no.ntnu.stud.gr55.repositories.MovieRepository;
+import no.ntnu.stud.gr55.utils.omdb.OMDBFetch;
+import no.ntnu.stud.gr55.utils.omdb.OMDBSearch;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +34,7 @@ public class MovieController {
                                  @RequestParam(name = "year", required = false) Integer year,
                                  @RequestParam(name = "director", required = false) String director) {
 
-        Sort sort = Sort.by("year").descending(); // primitive sort for first release
+        Sort sort = Sort.by("imdbVotes").descending(); // primitive sort for first release
         Pageable pageable = PageRequest.of(page, 25, sort);
 
         return movieRepository.findMoviesFiltered(year, director, genre, pageable).getContent();
@@ -40,6 +42,26 @@ public class MovieController {
 
     @GetMapping("/movies/search/{title}")
     public List<Movie> getMoviesByTitle(@PathVariable("title") String title) {
+        OMDBSearch search = OMDBFetch.fetchSearch(omdbApiKey, title);
+        if (search == null || !search.getResponse()) {
+            System.out.println("OMDB search failed");
+            return movieRepository.findByTitleContainingIgnoreCase(title);
+        }
+
+        search.search.forEach(movie -> {
+            if (movieRepository.findById(movie.getImdbId()).isEmpty()) {
+                Movie asMovieObject = movie.toMovie(false);
+
+                if (asMovieObject != null) {
+                    movieRepository.save(asMovieObject);
+                }
+                else{
+                    System.out.println("Failed to convert OMDB movie to Movie object");
+                    System.out.println("OMDB movie: " + movie.toString());
+                }
+            }
+        });
+
         return movieRepository.findByTitleContainingIgnoreCase(title);
     }
 
@@ -54,9 +76,13 @@ public class MovieController {
         Hibernate.initialize(movie.getDirectors());
         Hibernate.initialize(movie.getWriters());
 
-        boolean omdbFetch = movie.attemptPopulateMissingOMDB(omdbApiKey);
-        if (omdbFetch) {
-            movieRepository.save(movie);
+        if (!movie.isDetailsFetched()) {
+            var fetch = OMDBFetch.fetchMovie(omdbApiKey, movie.getId());
+
+            if (fetch != null) {
+                fetch.updateDetailsMovie(movie);
+                movieRepository.save(movie);
+            }
         }
 
         return movie;

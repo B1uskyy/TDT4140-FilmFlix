@@ -18,13 +18,4 @@ class Movie {
     } 
 }
 
-class Crew {
-    constructor(id, name, birthYear, deathYear) {
-        this.id = id;
-        this.name = name;
-        this.birthYear = birthYear;
-        this.deathYear = deathYear;
-    }
-}
-
-export {Movie, Crew}
+export {Movie}
