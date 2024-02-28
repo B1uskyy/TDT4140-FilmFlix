@@ -6,7 +6,8 @@ import './movies.css'; // Importer CSS-filen
 import RESTFetcher from '../../helpers/RESTFetcher';
 import Navbar from "../../components/navbar/Navbar.jsx";
 import {Link, useParams} from "react-router-dom";
-import FilterBlock from "./components/FilterBlock";
+import ValueSelectorMultivalue from "../../components/value_selectors/ValueSelectorMultivalue.jsx";
+import ValueSelectorRangeTwovalued from "../../components/value_selectors/ValueSelectorRangeTwovalued";
 
 const Movies = () => {
 
@@ -27,13 +28,23 @@ const Movies = () => {
     const [availableActors, setAvailableActors] = useState([]);
     const [selectedActor, setSelectedActor] = useState(null);
 
+    const [availableYearRange, setAvailableYearRange] = useState([1900, 2022]);
+    const [selectedYearRange, setSelectedYearRange] = useState([1900, 2022]);
+
   useEffect(() => {
-        setLoading(true);
-        RESTFetcher.fetchMovies(params.query, selectedGenre, selectedActor, selectedDirector, selectedWriter).then((movies) => {
+        // setLoading(true);
+        RESTFetcher.fetchMovies(params.query,
+            selectedGenre,
+            selectedActor,
+            selectedDirector,
+            selectedWriter,
+            selectedYearRange[0],
+            selectedYearRange[1]
+            ).then((movies) => {
           setMovies(movies); // TODO - add filter options
           setLoading(false);
-        });
-  }, [selectedGenre, selectedActor, selectedWriter, selectedDirector, params.query]);
+        }); // TODO - add yearRange here
+  }, [selectedGenre, selectedActor, selectedWriter, selectedDirector, selectedYearRange, params.query]);
 
     useEffect(() => {
 
@@ -49,6 +60,9 @@ const Movies = () => {
         RESTFetcher.fetchActors().then((actors) => {
             setAvailableActors(actors);
         });
+        RESTFetcher.fetchYears().then((yearRange) => {
+            setAvailableYearRange([yearRange.min, yearRange.max]);
+        });
 
     }, []);
 
@@ -59,12 +73,13 @@ const Movies = () => {
         <Navbar/>
         <div className="movies-overview-container">
           <div className="movies-filter-container">
-              <FilterBlock stateChanger={setSelectedGenre} filterName="Genre" filterAlternatives={availableGenres}/>
-              <FilterBlock stateChanger={setSelectedDirector} filterName="Director" filterAlternatives={availableDirectors}/>
-              <FilterBlock stateChanger={setSelectedActor} filterName="Actor" filterAlternatives={availableActors}/>
-              <FilterBlock stateChanger={setSelectedWriter} filterName="Writer" filterAlternatives={availableWriters}/>
+              <ValueSelectorRangeTwovalued stateChanger={setSelectedYearRange} filterName="Release year" min_max_array={availableYearRange}/>
+              <ValueSelectorMultivalue stateChanger={setSelectedGenre} filterName="Genre" filterAlternatives={availableGenres}/>
+              <ValueSelectorMultivalue stateChanger={setSelectedDirector} filterName="Director" filterAlternatives={availableDirectors}/>
+              <ValueSelectorMultivalue stateChanger={setSelectedActor} filterName="Actor" filterAlternatives={availableActors}/>
+              <ValueSelectorMultivalue stateChanger={setSelectedWriter} filterName="Writer" filterAlternatives={availableWriters}/>
           </div>
-          <div>
+          <div className={"movies-list-container"}>
             {loading ? (
                 <Spinner animation="border" role="status">
                   <span className="visually-hidden">Loading...</span>

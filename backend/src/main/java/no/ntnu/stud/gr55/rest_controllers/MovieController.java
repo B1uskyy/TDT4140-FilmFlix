@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RequestMapping("/api")
@@ -31,7 +32,8 @@ public class MovieController {
     @GetMapping("/movies")
     public List<Movie> getMovies(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                 @RequestParam(name = "genre", required = false) String genre,
-                                 @RequestParam(name = "year", required = false) Integer year,
+                                 @RequestParam(name = "minYear", required = false) Integer minYear,
+                                @RequestParam(name = "maxYear", required = false) Integer maxYear,
                                  @RequestParam(name = "director", required = false) String director,
                                 @RequestParam(name = "actor", required = false) String actor,
                                 @RequestParam(name = "writer", required = false) String writer,
@@ -55,7 +57,10 @@ public class MovieController {
         Sort sort = Sort.by("imdbVotes").descending(); // primitive sort for first release
         Pageable pageable = PageRequest.of(page, 25, sort);
 
-        return movieRepository.findMoviesFiltered(year, director, genre, actor, writer, search, pageable).getContent();
+        return movieRepository.findMoviesFiltered(minYear, maxYear,
+                director, genre,
+                actor, writer,
+                search, pageable).getContent();
     }
 
     @GetMapping("/movies/autocomplete/{title}")
@@ -110,4 +115,8 @@ public class MovieController {
         return movieRepository.getDistinctWriters();
     }
 
+    @GetMapping("/movies/years")
+    public Map<String, Integer> getMinMaxYear() {
+        return movieRepository.getMinMaxYear();
+    }
 }

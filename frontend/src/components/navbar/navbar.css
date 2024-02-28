@@ -1,5 +1,8 @@
 * {
     box-sizing: border-box;
+
+
+    --accent-color: #501919;
 }
 
 body { 
@@ -7,7 +10,7 @@ body {
 }
 
 nav {
-    background-color: #501919;
+    background-color: var(--accent-color);
     display: flex;
     min-height: 70px;
     align-items: center;
