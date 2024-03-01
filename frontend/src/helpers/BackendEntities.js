@@ -1,6 +1,6 @@
 
 class Movie {
-    constructor(id, title, year, runtimeMinutes, genres, posterURL, description, directors, writers, imdbVotes){
+    constructor(id, title, year, runtimeMinutes, genres, posterURL, description, directors, writers, actors, imdbVotes){
         this.id = id;
         this.title = title;
         this.year = year;
@@ -10,11 +10,12 @@ class Movie {
         this.description = description;
         this.directors = directors;
         this.writers = writers;
+        this.actors = actors;
         this.imdbVotes = imdbVotes;
     }
 
     static empty(){
-        return new Movie(-1, "", -1, -1, [], "", "", [], [], -1);
+        return new Movie(-1, "", -1, -1, [], "", "", [], [], [], -1);
     } 
 }
 

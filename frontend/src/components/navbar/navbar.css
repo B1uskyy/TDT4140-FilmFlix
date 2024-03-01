@@ -1,5 +1,8 @@
 * {
     box-sizing: border-box;
+
+
+    --accent-color: #501919;
 }
 
 body { 
@@ -7,31 +10,23 @@ body {
 }
 
 nav {
-    background-color: #501919;
+    background-color: var(--accent-color);
     display: flex;
     min-height: 70px;
     align-items: center;
     justify-content: space-between;
     position: sticky;
     top: 0;
+    z-index: 2;
 }
 
 .menu-items {
     min-width: 300px;
     display: flex;
     align-items: center;
+
     padding-left: 10px;
     justify-content: space-between;
-}
-
-.search-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.searchbtn {
-    margin-left: 10px;
 }
 
 .menu-items div:hover {

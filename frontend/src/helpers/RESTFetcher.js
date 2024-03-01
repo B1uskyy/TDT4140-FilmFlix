@@ -9,11 +9,16 @@ class RESTFetcher {
         return this.urlMovies + "/view/" + id;
     }
 
-    static urlMovieSearch(query) {
-        return this.urlMovies + "/search/" + query;
+    static urlMovieAutocomplete(query) {
+        return this.urlMovies + "/autocomplete/" + query;
     }
 
     static urlGenres = this.urlMovies + "/genres"
+
+    static urlDirectors = this.urlMovies + "/directors"
+    static urlWriters = this.urlMovies + "/writers"
+    static urlActors = this.urlMovies + "/actors"
+    static urlYears = this.urlMovies + "/years"
 
     static jsonToMovie(json) {
         console.log("json: " + json)
@@ -29,6 +34,7 @@ class RESTFetcher {
             json.description,
             json.directors,
             json.writers,
+            json.actors,
             json.imdbVotes
         );
     }
@@ -37,9 +43,36 @@ class RESTFetcher {
      * Fetches all (upto 10) movies from the backend
      * @returns {Promise<*|*[]>} A promise with a list of all movies from the backend
      */
-    static async fetchMovies() {
+    static async fetchMovies(search_query = null,
+        genres = null, actors = null, directors = null, writers = null,
+                             minYear = null, maxYear = null) {
+        let url = this.urlMovies + "?"
+        if (genres !== null){
+            url += "&genre=" + genres
+        }
+        if (actors !== null){
+            url += "&actor=" + actors
+        }
+        if (directors !== null){
+            url += "&director=" + directors
+        }
+        if (writers !== null){
+            url += "&writer=" + writers
+        }
+        if (minYear !== null){
+            url += "&minYear=" + minYear
+        }
+        if (maxYear !== null){
+            url += "&maxYear=" + maxYear
+        }
+
+        if (search_query !== null && search_query !== undefined){
+            url += "&search=" + search_query
+        }
+
+
         try{
-            const response = await fetch(this.urlMovies, {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,32 +119,9 @@ class RESTFetcher {
         }
     }
 
-    static async searchMovies(query) {
+    static async fetchJSON(url, defaultValue = null) {
         try{
-            const response = await fetch(this.urlMovieSearch(query), {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            if (!response.ok){
-                console.log("Could not fetch movies")
-                return []
-            }
-            const json = await response.json();
-            return json.map(movie => this.jsonToMovie(movie));
-        }
-        catch (error){
-            console.log("Failed fetching movies: " + error)
-            return []
-        }
-    }
-
-    static async fetchGenres() {
-        console.log("Genres url: " + this.urlGenres)
-        try{
-            const response = await fetch(this.urlGenres, {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -120,15 +130,46 @@ class RESTFetcher {
             })
             if (!response.ok){
                 console.log("Could not fetch genres")
-                return []
+                return defaultValue
             }
             return await response.json();
         }
         catch (error){
             console.log("Failed fetching genres: " + error)
-            return []
+            return defaultValue
         }
     }
+
+    static async fetchGenres() {
+        return await this.fetchJSON(this.urlGenres, []);
+    }
+
+    static async fetchDirectors() {
+        return await this.fetchJSON(this.urlDirectors, []);
+    }
+
+    static async fetchWriters() {
+        return await this.fetchJSON(this.urlWriters, []);
+    }
+
+    static async fetchActors() {
+        return await this.fetchJSON(this.urlActors, []);
+    }
+
+    static async fetchAutocomplete(query) {
+        let search = this.urlMovieAutocomplete(query)
+        const response = await this.fetchJSON(search)
+
+        if (response === null) {
+            return []
+        }
+        return response.map(movie => this.jsonToMovie(movie))
+    }
+
+    static async fetchYears() {
+        return await this.fetchJSON(this.urlYears, {min: 1900, max: 2050});
+    }
+
 }
 
 export default RESTFetcher;

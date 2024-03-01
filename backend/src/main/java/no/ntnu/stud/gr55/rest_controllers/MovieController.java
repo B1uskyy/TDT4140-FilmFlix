@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RequestMapping("/api")
@@ -31,38 +32,41 @@ public class MovieController {
     @GetMapping("/movies")
     public List<Movie> getMovies(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                 @RequestParam(name = "genre", required = false) String genre,
-                                 @RequestParam(name = "year", required = false) Integer year,
-                                 @RequestParam(name = "director", required = false) String director) {
+                                 @RequestParam(name = "minYear", required = false) Integer minYear,
+                                @RequestParam(name = "maxYear", required = false) Integer maxYear,
+                                 @RequestParam(name = "director", required = false) String director,
+                                @RequestParam(name = "actor", required = false) String actor,
+                                @RequestParam(name = "writer", required = false) String writer,
+                                 @RequestParam(name = "search", required = false) String search
+    ) {
+
+        if (search != null) {
+            OMDBSearch omdbSearch = OMDBFetch.fetchSearch(omdbApiKey, search);
+            if (omdbSearch != null && omdbSearch.getResponse()) {
+                omdbSearch.search.forEach(movie -> {
+                    if (movieRepository.findById(movie.getImdbId()).isEmpty()) {
+                        Movie asMovieObject = movie.toMovie(false);
+                        if (asMovieObject != null) {
+                            movieRepository.save(asMovieObject);
+                        }
+                    }
+                });
+            }
+        }
 
         Sort sort = Sort.by("imdbVotes").descending(); // primitive sort for first release
         Pageable pageable = PageRequest.of(page, 25, sort);
 
-        return movieRepository.findMoviesFiltered(year, director, genre, pageable).getContent();
+        return movieRepository.findMoviesFiltered(minYear, maxYear,
+                director, genre,
+                actor, writer,
+                search, pageable).getContent();
     }
 
-    @GetMapping("/movies/search/{title}")
+    @GetMapping("/movies/autocomplete/{title}")
     public List<Movie> getMoviesByTitle(@PathVariable("title") String title) {
-        OMDBSearch search = OMDBFetch.fetchSearch(omdbApiKey, title);
-        if (search == null || !search.getResponse()) {
-            System.out.println("OMDB search failed");
-            return movieRepository.findByTitleContainingIgnoreCase(title);
-        }
-
-        search.search.forEach(movie -> {
-            if (movieRepository.findById(movie.getImdbId()).isEmpty()) {
-                Movie asMovieObject = movie.toMovie(false);
-
-                if (asMovieObject != null) {
-                    movieRepository.save(asMovieObject);
-                }
-                else{
-                    System.out.println("Failed to convert OMDB movie to Movie object");
-                    System.out.println("OMDB movie: " + movie.toString());
-                }
-            }
-        });
-
-        return movieRepository.findByTitleContainingIgnoreCase(title);
+        Pageable topFive = PageRequest.of(0, 5);
+        return movieRepository.findByTitleContainingIgnoreCase(title, topFive).getContent();
     }
 
     @GetMapping("/movies/view/{id}")
@@ -94,5 +98,25 @@ public class MovieController {
     @GetMapping("/movies/genres")
     public List<String> getGenres() {
         return movieRepository.getDistinctGenres();
+    }
+
+    @GetMapping("/movies/directors")
+    public List<String> getDirectors() {
+        return movieRepository.getDistinctDirectors();
+    }
+
+    @GetMapping("/movies/actors")
+    public List<String> getActors() {
+        return movieRepository.getDistinctActors();
+    }
+
+    @GetMapping("/movies/writers")
+    public List<String> getWriters() {
+        return movieRepository.getDistinctWriters();
+    }
+
+    @GetMapping("/movies/years")
+    public Map<String, Integer> getMinMaxYear() {
+        return movieRepository.getMinMaxYear();
     }
 }
