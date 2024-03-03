@@ -6,15 +6,15 @@ import Homepage from "./pages/homepage/Homepage";
 import Movies from "./pages/movies/Movies";
 import UserSite from "./pages/user/UserSite";
 import MovieCard from "./pages/movie_card/MovieCard";
-
+import Register from "./pages/login/Register";
 
 function App() {
-
 	return (
 		<div>
 			<Router>
 				<Routes>
 					<Route path="/login" exact={true} element={<Login />} />
+					<Route path="/register" element={<Register />} />
 					<Route path="/" element={<Homepage />}></Route>
 					<Route path="/user" element={<UserSite />}></Route>
 					<Route path="/movies/:id" element={<MovieCard />}></Route>
