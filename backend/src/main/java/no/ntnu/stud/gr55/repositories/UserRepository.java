@@ -22,8 +22,10 @@ public interface UserRepository extends JpaRepository<User, Long>{
 // void registerUser(@Param("username") String username, @Param("password") String password); 
 
 
-public abstract List<User> findByUsernameAndPassword(String username, String password);
+public abstract List<User> getByUsernameAndPassword(String username, String password);
 User save(User user); 
+
+public List<User> getUsers(); 
 
     
 }

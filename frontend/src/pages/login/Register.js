@@ -1,12 +1,26 @@
+// eslint-disable-next-line
 import react, { useState } from "react";
 import "./login.css";
 import posters from "../../img/posters.jpg";
-import { useNavigate } from "react-router-dom";
 import FilmFlixLogo from "../../img/FilmFlixLogo.svg";
+import axios from "axios";
 
 function Register() {
 	const [password, setPassword] = useState("");
 	const [username, setUserName] = useState("");
+
+	const registerUser = async () => {
+		try {
+			const response = await axios.post("/api/users", {
+				username,
+				password,
+			});
+
+			console.log(response.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<div className={"mainContainer"}>
@@ -43,7 +57,8 @@ function Register() {
 					<input
 						className={"inputButton"}
 						type="button"
-						value={"Reguster user"}
+						value={"Register user"}
+						onClick={() => registerUser()}
 					/>
 				</div>
 			</div>
