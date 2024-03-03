@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 // void registerUser(@Param("username") String username, @Param("password") String password); 
 
 
-List<User> findByUserNameAndPassword(String username, String password); 
+public abstract List<User> findByUsernameAndPassword(String username, String password);
 User save(User user); 
 
     
