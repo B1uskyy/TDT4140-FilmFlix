@@ -1,0 +1,41 @@
+.value-range-container{
+    display: flex;
+    flex-direction: column;
+
+    padding: 1em;
+}
+
+.value-range-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.value-range-input-header{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2em;
+}
+
+.value-range-input-input{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+}
+
+.value-range-input-slidebar {
+    width: 80%;
+    margin-left: 1em;
+
+    accent-color: var(--accent-color);
+}
+
+.value-range-input-number{
+    width: 24%;
+    min-width: 5em;
+    padding: 0.3em;
+    font-family: 'Montserrat', sans-serif;
+}
