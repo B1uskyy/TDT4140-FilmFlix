@@ -31,16 +31,14 @@ import no.ntnu.stud.gr55.repositories.UserRepository;
 @RequestMapping("/api")
 public class UserController {
 
-      @Autowired
+    @Autowired
     private UserRepository userRepository;
 
 
     @PostMapping("/users/all")
     public List<User> getAllUsers() {
-        return userRepository.findAll(); 
+        return userRepository.findAll();
     }
-
-  
 
 
     @PostMapping("/users")
@@ -50,11 +48,9 @@ public class UserController {
         // String password = loginRequest.get("password");
 
 
-        return userRepository.save(user); 
+        return userRepository.save(user);
 
 
-
-    
         // if (isValidCredentials(email, password)) {
         //     // Return success response
         //     Map<String, String> response = new HashMap<>();
@@ -77,9 +73,10 @@ public class UserController {
     }
 
     private boolean isValidCredentials(String email, String password) {
-   return true;
-}
+        return true;
+    }
 
-private boolean registerUser(String email, String password) {
-    return true;
-}}
+    private boolean registerUser(String email, String password) {
+        return true;
+    }
+}
