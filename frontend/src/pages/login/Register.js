@@ -11,7 +11,7 @@ function Register() {
 
 	const registerUser = async () => {
 		try {
-			const response = await axios.post("/api/users", {
+			const response = await axios.post("http://localhost:8080/api/users", {
 				username,
 				password,
 			});
@@ -35,7 +35,7 @@ function Register() {
 					<br />
 					<input
 						value={username}
-						placeholder="Enter your email here"
+						placeholder="Enter your username here"
 						onChange={(ev) => setUserName(ev.target.value)}
 						className={"inputBox"}
 					/>
