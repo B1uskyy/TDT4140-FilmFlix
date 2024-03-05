@@ -8,11 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,24 +26,25 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import no.ntnu.stud.gr55.entities.User;
 import no.ntnu.stud.gr55.repositories.UserRepository;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
-public class LoginController {
+public class UserController {
 
       @Autowired
     private UserRepository userRepository;
 
 
-    @GetMapping("/users/all")
+    @PostMapping("/users/all")
     public List<User> getAllUsers() {
-        return userRepository.getUsers(); 
+        return userRepository.findAll(); 
     }
 
   
 
 
     @PostMapping("/users")
-    public User register(@RequestBody User user) {
+    public User register(@RequestParam User user) {
         // ResponseEntity<Map<String, String>>
         // String email = loginRequest.get("email");
         // String password = loginRequest.get("password");
