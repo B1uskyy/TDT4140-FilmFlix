@@ -5,3 +5,4 @@ sql_data/*
 venv
 .DS_Store
 .env
+db/

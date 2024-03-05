@@ -12,6 +12,7 @@ import no.ntnu.stud.gr55.entities.User;
 
 
 public interface UserRepository extends JpaRepository<User, Long>{
+<<<<<<< HEAD
     
 
 
@@ -28,4 +29,7 @@ User save(User user);
 // public List<User> getUsers(); 
 
     
+=======
+    public List<User> findByUsername(String username);
+>>>>>>> 5cf48317bf9a430f7813561d29bcfc4a0b2f5f85
 }

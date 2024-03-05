@@ -11,10 +11,23 @@ function Register() {
 
 	const registerUser = async () => {
 		try {
+<<<<<<< HEAD
 			const response = await axios.post("http://localhost:8080/api/users", {
 				username,
 				password,
 			});
+=======
+			const response = await axios.post("http://localhost:8080/api/users/register", {
+				username: username,
+				password: password,
+			},
+				{
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json",
+					},
+				});
+>>>>>>> 5cf48317bf9a430f7813561d29bcfc4a0b2f5f85
 
 			console.log(response.data);
 		} catch (error) {
