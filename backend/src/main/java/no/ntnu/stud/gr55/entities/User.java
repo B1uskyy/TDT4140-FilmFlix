@@ -3,11 +3,14 @@ package no.ntnu.stud.gr55.entities;
 import jakarta.persistence.*; 
 
 @Entity
+@Table(name = "users")
 public class User {
     public User(String username, String password){
         this.username = username;
         this.password = password;
     }
+
+    public User() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

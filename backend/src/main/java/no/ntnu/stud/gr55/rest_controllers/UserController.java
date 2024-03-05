@@ -11,20 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import no.ntnu.stud.gr55.entities.User;
 import no.ntnu.stud.gr55.repositories.UserRepository;
+import org.springframework.web.server.ResponseStatusException;
 
 @CrossOrigin
 @RestController
@@ -41,12 +36,24 @@ public class UserController {
     }
 
 
-    @PostMapping("/users")
-    public User register(@RequestParam User user) {
-        // ResponseEntity<Map<String, String>>
-        // String email = loginRequest.get("email");
-        // String password = loginRequest.get("password");
+    @PostMapping("/users/register")
+    public User register(@RequestBody Map<String, String> body) {
 
+        String username = body.get("username");
+        String password = body.get("password");
+
+        if (username == null || password == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username and password must be provided");
+        }
+
+        if (!userRepository.findByUsername(username).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+        }
+
+        User user = new User();
+
+        user.setUsername(username);
+        user.setPassword(password);
 
         return userRepository.save(user);
 
