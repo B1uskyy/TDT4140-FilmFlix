@@ -3,21 +3,15 @@ package no.ntnu.stud.gr55.entities;
 import jakarta.persistence.*; 
 
 @Entity
-<<<<<<< HEAD
-=======
 @Table(name = "users")
->>>>>>> 5cf48317bf9a430f7813561d29bcfc4a0b2f5f85
 public class User {
     public User(String username, String password){
         this.username = username;
         this.password = password;
     }
 
-<<<<<<< HEAD
-=======
     public User() {}
 
->>>>>>> 5cf48317bf9a430f7813561d29bcfc4a0b2f5f85
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
