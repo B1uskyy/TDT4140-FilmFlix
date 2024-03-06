@@ -8,7 +8,7 @@ import FilmFlixLogo from "../../img/FilmFlixLogo.svg";
 // import Logo from "./../components/Logo";æ
 
 function Login(props) {
-	const [email, setEmail] = useState("");
+	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
@@ -18,38 +18,8 @@ function Login(props) {
 
 	const validateCredentials = async () => {
 		try {
-			// Set initial error values to empty
-			setEmailError("");
-			setPasswordError("");
-
-			// Check if the user has entered both fields correctly
-			if ("" === email) {
-				setEmailError("Please enter your email");
-				return;
-			}
-			
-
-			if ("" === password) {
-				setPasswordError("Please enter a password");
-				return;
-			}
-
-			// Find matching user in the data
-			const foundUser = users.find(
-				(user) => user.email === email && user.password === password,
-			);
-
-			if (foundUser) {
-				setSuccessfulLogin("Login successful!");
-				const path = "/homepage";
-				navigate(path);
-				// Store any user data or tokens if available
-			} else {
-				throw new Error("Invalid email or password");
-			}
 		} catch (error) {
-			console.error("Login error:", error);
-			setEmailError("Invalid email or password");
+			console.log(error);
 		}
 	};
 
@@ -60,13 +30,13 @@ function Login(props) {
 		setSuccessfulLogin("");
 
 		// Check if the user has entered both fields correctly
-		if ("" === email) {
+		if ("" === username) {
 			setEmailError("Please enter your email");
 			return;
 		}
 
 		// eslint-disable-next-line
-		if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+		if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(username)) {
 			// REGEX for å oppgi en valid epost
 			setEmailError("Please enter a valid email");
 			return;
@@ -94,9 +64,9 @@ function Login(props) {
 					<p className="inputTitle">Username</p>
 					<br />
 					<input
-						value={email}
-						placeholder="Enter your email here"
-						onChange={(ev) => setEmail(ev.target.value)}
+						value={username}
+						placeholder="Enter your username here"
+						onChange={(ev) => setUsername(ev.target.value)}
 						className={"inputBox"}
 					/>
 					<label className="errorLabel">{emailError}</label>
@@ -125,9 +95,9 @@ function Login(props) {
 					<label className="successfulLogin">{successfulLogin}</label>
 				</div>
 				<a href="/register" className="signupLink">
-						{" "}
-						New user? Sign up
-					</a>
+					{" "}
+					New user? Sign up
+				</a>
 			</div>
 		</div>
 	);
