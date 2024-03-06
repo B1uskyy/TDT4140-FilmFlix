@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import posters from "../../img/posters.jpg";
-import users from "../../data/users.json";
 import FilmFlixLogo from "../../img/FilmFlixLogo.svg";
 
 // import Logo from "./../components/Logo";æ
@@ -24,18 +23,16 @@ function Login(props) {
 				body: JSON.stringify({ username, password }),
 			});
 
-			if (response.ok) {
-				const data = await response.json();
-
-				setSuccessfulLogin(data.message);
-
-				//TODO Må håndtere routing til ny side..
-			} else {
-				const errordata = await response.json();
-
-				setEmailError(errordata.usernameError);
-				setPasswordError(errordata.passwordError);
+			if (!response.ok) {
+				throw new Error(
+					"Failed to authenticate user. Please check your credentials.",
+				);
 			}
+
+			const data = await response.json();
+
+			setSuccessfulLogin(data.message);
+			//TODO Må håndtere routing til ny side..
 		} catch (error) {
 			console.log(`Error: ${error}`);
 		}

@@ -89,21 +89,13 @@ public class UserController {
         // Find user by username and password
         List<User> users = userRepository.findByUsernameAndPassword(username, password);
 
-        // if (users.isEmpty()) {
-        //     return ResponseEntity.badRequest().body(
-        //         new LoginResponse("Invalid username or password")
-        //     );
-        // }
+        if (users.isEmpty()) {
+             return ResponseEntity.badRequest().build();
+            
+        }
 
-        // Successful login (send relevant information in the response)
-        return (ResponseEntity<User>) ResponseEntity.ok();
+        // Successful login
+        return ResponseEntity.ok().build();
     }
 
-    private boolean isValidCredentials(String email, String password) {
-        return true;
-    }
-
-    private boolean registerUser(String email, String password) {
-        return true;
-    }
 }
