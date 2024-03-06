@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+import no.ntnu.stud.gr55.entities.LoginResponse;
 import no.ntnu.stud.gr55.entities.User;
 import no.ntnu.stud.gr55.repositories.UserRepository;
 import org.springframework.web.server.ResponseStatusException;
@@ -77,6 +77,26 @@ public class UserController {
         //         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         //     }
         // }
+    }
+
+
+    @PostMapping("users/login")
+    public ResponseEntity<User> login(@RequestBody User request) {
+        String username = request.getUsername();
+        String password = request.getPassword();
+
+        
+        // Find user by username and password
+        List<User> users = userRepository.findByUsernameAndPassword(username, password);
+
+        // if (users.isEmpty()) {
+        //     return ResponseEntity.badRequest().body(
+        //         new LoginResponse("Invalid username or password")
+        //     );
+        // }
+
+        // Successful login (send relevant information in the response)
+        return (ResponseEntity<User>) ResponseEntity.ok();
     }
 
     private boolean isValidCredentials(String email, String password) {
