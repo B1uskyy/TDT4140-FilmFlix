@@ -18,8 +18,26 @@ function Login(props) {
 
 	const validateCredentials = async () => {
 		try {
+			const response = await fetch("http://localhost:8080/api/users/login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ username, password }),
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+
+				setSuccessfulLogin(data.message);
+
+				//TODO Må håndtere routing til ny side..
+			} else {
+				const errordata = await response.json();
+
+				setEmailError(errordata.usernameError);
+				setPasswordError(errordata.passwordError);
+			}
 		} catch (error) {
-			console.log(error);
+			console.log(`Error: ${error}`);
 		}
 	};
 
@@ -29,16 +47,9 @@ function Login(props) {
 		setPasswordError("");
 		setSuccessfulLogin("");
 
-		// Check if the user has entered both fields correctly
 		if ("" === username) {
-			setEmailError("Please enter your email");
-			return;
-		}
-
-		// eslint-disable-next-line
-		if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(username)) {
-			// REGEX for å oppgi en valid epost
-			setEmailError("Please enter a valid email");
+			// Check if the user has entered both fields correctly
+			setEmailError("Please enter your username");
 			return;
 		}
 
@@ -47,9 +58,9 @@ function Login(props) {
 			return;
 		}
 
-		// Authentication calls will be made here...
-
-		validateCredentials();
+		if (!emailError && !passwordError) {
+			validateCredentials();
+		}
 	};
 
 	return (
