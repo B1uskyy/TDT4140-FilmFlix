@@ -29,6 +29,12 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @GetMapping ("/users")
+    public List<User> getUsers() {
+        return  userRepository.findAllList(); 
+    }
+
+
 
     @PostMapping("/users/all")
     public List<User> getAllUsers() {
@@ -81,7 +87,7 @@ public class UserController {
 
 
     @PostMapping("users/login")
-    public ResponseEntity<User> login(@RequestBody User request) {
+    public ResponseEntity<Object> login(@RequestBody User request) {
         String username = request.getUsername();
         String password = request.getPassword();
 
@@ -90,7 +96,7 @@ public class UserController {
         List<User> users = userRepository.findByUsernameAndPassword(username, password);
 
         if (users.isEmpty()) {
-             return ResponseEntity.badRequest().build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username or password");
             
         }
 

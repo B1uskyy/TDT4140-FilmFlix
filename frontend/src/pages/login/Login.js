@@ -16,12 +16,15 @@ function Login(props) {
 	const navigate = useNavigate();
 
 	const validateCredentials = async () => {
+		setSuccessfulLogin("");
+
 		try {
 			const response = await fetch("http://localhost:8080/api/users/login", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ username, password }),
 			});
+			console.log(response);
 
 			if (!response.ok) {
 				throw new Error(
@@ -29,10 +32,9 @@ function Login(props) {
 				);
 			}
 
-			const data = await response.json();
+			setSuccessfulLogin("Login successfull");
 
-			setSuccessfulLogin(data.message);
-			//TODO Må håndtere routing til ny side..
+			// TODO: Handle routing to a new page
 		} catch (error) {
 			console.log(`Error: ${error}`);
 		}
