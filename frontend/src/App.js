@@ -6,6 +6,7 @@ import Homepage from "./pages/homepage/Homepage";
 import Movies from "./pages/movies/Movies";
 import UserSite from "./pages/user/UserSite";
 import MovieCard from "./pages/movie_card/MovieCard";
+import CarouselPage from "./pages/carouselpage/CarouselPage";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
 					<Route path="/movies/:id" element={<MovieCard />}></Route>
 					<Route path="/movies" element={<Movies />}></Route>
 					<Route path="/search/:query" element={<Movies />}></Route>
+					<Route path="/carouselpage" element={<CarouselPage />}></Route>
 				</Routes>
 			</Router>
 		</div>
