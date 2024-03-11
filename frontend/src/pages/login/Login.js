@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import posters from "../../img/posters.jpg";
 import FilmFlixLogo from "../../img/FilmFlixLogo.svg";
+import UserContext from "../../helpers/UserContext";
 
 // import Logo from "./../components/Logo";æ
 
@@ -12,6 +13,8 @@ function Login(props) {
 	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [successfulLogin, setSuccessfulLogin] = useState("");
+	const { setUser } = useContext(UserContext);
+
 	// eslint-disable-next-line
 	const navigate = useNavigate();
 
@@ -27,14 +30,15 @@ function Login(props) {
 			console.log(response);
 
 			if (!response.ok) {
+				setSuccessfulLogin("Wrong username og password!");
 				throw new Error(
 					"Failed to authenticate user. Please check your credentials.",
 				);
 			}
 
+			setUser({ username }); // Update context with the username
 			setSuccessfulLogin("Login successfull");
-
-			// TODO: Handle routing to a new page
+			navigate("/");
 		} catch (error) {
 			console.log(`Error: ${error}`);
 		}
