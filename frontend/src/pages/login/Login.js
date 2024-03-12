@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import posters from "../../img/posters.jpg";
 import FilmFlixLogo from "../../img/FilmFlixLogo.svg";
-import UserContext from "../../helpers/UserContext";
+import { useUser } from "../../helpers/UserContext";
 
 // import Logo from "./../components/Logo";æ
 
@@ -13,7 +13,7 @@ function Login(props) {
 	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [successfulLogin, setSuccessfulLogin] = useState("");
-	const { setUser } = useContext(UserContext);
+	const { setUser } = useUser();
 
 	// eslint-disable-next-line
 	const navigate = useNavigate();
