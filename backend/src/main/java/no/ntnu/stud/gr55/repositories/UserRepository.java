@@ -13,10 +13,12 @@ import no.ntnu.stud.gr55.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 
-    public List<User> findAllList(); 
+    // public List<User> findAll();
+
 
     public List<User> findByUsername(String username);
 
-    @Query("SELECT * from users where user.username == username AND user.password == password")
-    public List<User> findByUsernameAndPassword(String username, String password); 
+    @Query("SELECT u FROM User u WHERE u.username = :username AND u.password = :password")
+    List<User> findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
 }

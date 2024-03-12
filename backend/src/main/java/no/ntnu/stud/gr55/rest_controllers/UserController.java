@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import no.ntnu.stud.gr55.entities.LoginResponse;
 import no.ntnu.stud.gr55.entities.User;
 import no.ntnu.stud.gr55.repositories.UserRepository;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,17 +28,11 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping ("/users")
-    public List<User> getUsers() {
-        return  userRepository.findAllList(); 
-    }
 
-
-
-    @PostMapping("/users/all")
+    @GetMapping("/users/all")
     public List<User> getAllUsers() {
         return userRepository.findAll();
-    }
+}
 
 
     @PostMapping("/users/register")
@@ -99,6 +92,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username or password");
             
         }
+
+    
+
+
 
         // Successful login
         return ResponseEntity.ok().build();
