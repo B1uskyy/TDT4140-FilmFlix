@@ -1,59 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import posters from "../../img/posters.jpg";
-import users from "../../data/users.json";
 import FilmFlixLogo from "../../img/FilmFlixLogo.svg";
+import { useUser } from "../../helpers/UserContext";
 
 // import Logo from "./../components/Logo";æ
 
 function Login(props) {
-	const [email, setEmail] = useState("");
+	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [successfulLogin, setSuccessfulLogin] = useState("");
+	const { setUser } = useUser();
+
 	// eslint-disable-next-line
 	const navigate = useNavigate();
 
 	const validateCredentials = async () => {
+		setSuccessfulLogin("");
+
 		try {
-			// Set initial error values to empty
-			setEmailError("");
-			setPasswordError("");
+			const response = await fetch("http://localhost:8080/api/users/login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ username, password }),
+			});
+			console.log(response);
 
-			// Check if the user has entered both fields correctly
-			if ("" === email) {
-				setEmailError("Please enter your email");
-				return;
-			}
-			
-			if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-				setEmailError("Please enter a valid email");
-				return;
-			}
-
-			if ("" === password) {
-				setPasswordError("Please enter a password");
-				return;
+			if (!response.ok) {
+				setSuccessfulLogin("Wrong username og password!");
+				throw new Error(
+					"Failed to authenticate user. Please check your credentials.",
+				);
 			}
 
-			// Find matching user in the data
-			const foundUser = users.find(
-				(user) => user.email === email && user.password === password,
-			);
-
-			if (foundUser) {
-				setSuccessfulLogin("Login successful!");
-				const path = "/homepage";
-				navigate(path);
-				// Store any user data or tokens if available
-			} else {
-				throw new Error("Invalid email or password");
-			}
+			setUser({ username }); // Update context with the username
+			setSuccessfulLogin("Login successfull");
+			navigate("/");
 		} catch (error) {
-			console.error("Login error:", error);
-			setEmailError("Invalid email or password");
+			console.log(`Error: ${error}`);
 		}
 	};
 
@@ -63,16 +50,9 @@ function Login(props) {
 		setPasswordError("");
 		setSuccessfulLogin("");
 
-		// Check if the user has entered both fields correctly
-		if ("" === email) {
-			setEmailError("Please enter your email");
-			return;
-		}
-
-		// eslint-disable-next-line
-		if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-			// REGEX for å oppgi en valid epost
-			setEmailError("Please enter a valid email");
+		if ("" === username) {
+			// Check if the user has entered both fields correctly
+			setEmailError("Please enter your username");
 			return;
 		}
 
@@ -81,9 +61,9 @@ function Login(props) {
 			return;
 		}
 
-		// Authentication calls will be made here...
-
-		validateCredentials();
+		if (!emailError && !passwordError) {
+			validateCredentials();
+		}
 	};
 
 	return (
@@ -98,9 +78,9 @@ function Login(props) {
 					<p className="inputTitle">Username</p>
 					<br />
 					<input
-						value={email}
-						placeholder="Enter your email here"
-						onChange={(ev) => setEmail(ev.target.value)}
+						value={username}
+						placeholder="Enter your username here"
+						onChange={(ev) => setUsername(ev.target.value)}
 						className={"inputBox"}
 					/>
 					<label className="errorLabel">{emailError}</label>
@@ -129,9 +109,9 @@ function Login(props) {
 					<label className="successfulLogin">{successfulLogin}</label>
 				</div>
 				<a href="/register" className="signupLink">
-						{" "}
-						New user? Sign up
-					</a>
+					{" "}
+					New user? Sign up
+				</a>
 			</div>
 		</div>
 	);
