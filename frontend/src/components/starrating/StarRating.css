@@ -1,0 +1,17 @@
+.star-rating button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.star {
+  color: gold;
+}
+
+.on .star {
+  color: gold;
+}
+
+.off .star {
+  color: grey;
+}
