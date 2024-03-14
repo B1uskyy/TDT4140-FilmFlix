@@ -32,12 +32,12 @@ public class MovieController {
     @GetMapping("/movies")
     public List<Movie> getMovies(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                 @RequestParam(name = "genre", required = false) String genre,
-                                 @RequestParam(name = "minYear", required = false) Integer minYear,
+                                @RequestParam(name = "minYear", required = false) Integer minYear,
                                 @RequestParam(name = "maxYear", required = false) Integer maxYear,
-                                 @RequestParam(name = "director", required = false) String director,
+                                @RequestParam(name = "director", required = false) String director,
                                 @RequestParam(name = "actor", required = false) String actor,
                                 @RequestParam(name = "writer", required = false) String writer,
-                                 @RequestParam(name = "search", required = false) String search
+                                @RequestParam(name = "search", required = false) String search
     ) {
 
         if (search != null) {

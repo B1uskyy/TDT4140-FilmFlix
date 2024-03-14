@@ -6,22 +6,25 @@ import Homepage from "./pages/homepage/Homepage";
 import Movies from "./pages/movies/Movies";
 import UserSite from "./pages/user/UserSite";
 import MovieCard from "./pages/movie_card/MovieCard";
-
+import Register from "./pages/login/Register";
+import { UserProvider } from "./helpers/UserContext";
 
 function App() {
-
 	return (
 		<div>
-			<Router>
-				<Routes>
-					<Route path="/login" exact={true} element={<Login />} />
-					<Route path="/" element={<Homepage />}></Route>
-					<Route path="/user" element={<UserSite />}></Route>
-					<Route path="/movies/:id" element={<MovieCard />}></Route>
-					<Route path="/movies" element={<Movies />}></Route>
-					<Route path="/search/:query" element={<Movies />}></Route>
-				</Routes>
-			</Router>
+			<UserProvider>
+				<Router>
+					<Routes>
+						<Route path="/login" element={<Login />} />
+						<Route path="/register" element={<Register />} />
+						<Route path="/" element={<Homepage />}></Route>
+						<Route path="/user" element={<UserSite />}></Route>
+						<Route path="/movies/:id" element={<MovieCard />}></Route>
+						<Route path="/movies" element={<Movies />}></Route>
+						<Route path="/search/:query" element={<Movies />}></Route>
+					</Routes>
+				</Router>
+			</UserProvider>
 		</div>
 	);
 }
