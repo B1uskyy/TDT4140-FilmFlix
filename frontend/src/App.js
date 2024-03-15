@@ -8,6 +8,7 @@ import UserSite from "./pages/user/UserSite";
 import MovieCard from "./pages/movie_card/MovieCard";
 import Register from "./pages/login/Register";
 import { UserProvider } from "./helpers/UserContext";
+import CarouselPage from "./pages/carouselpage/CarouselPage";
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 						<Route path="/movies/:id" element={<MovieCard />}></Route>
 						<Route path="/movies" element={<Movies />}></Route>
 						<Route path="/search/:query" element={<Movies />}></Route>
+						<Route path="/carouselpage" element={<CarouselPage />}></Route>
 					</Routes>
 				</Router>
 			</UserProvider>
