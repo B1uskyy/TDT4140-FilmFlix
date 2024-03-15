@@ -1,10 +1,20 @@
 /* movieCard.css */
 
+.movie-card-container {
+    background-color: #590e0e;
+    padding: 20px; /* Reduced padding */
+    width: 80%; /* Reduced width */
+    display: flex;
+    align-items: stretch;
+}
+
 .movie-card {
     display: flex;
-    margin-bottom: 20px;
-    padding: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+    height: 30px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
   
 img.movie-card {
@@ -40,5 +50,5 @@ p.movie-card {
     padding: 35px; 
     width: 100%;
     display: flex;
-    align-items: stretch;
+    align-items: stret ch;
 }

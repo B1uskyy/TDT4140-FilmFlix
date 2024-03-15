@@ -4,6 +4,8 @@ import "./moviecard.css";
 import RESTFetcher from "../../helpers/RESTFetcher";
 import { Movie } from "../../helpers/BackendEntities";
 import Navbar from "../../components/navbar/Navbar.jsx";
+import ReviewBox from "../../components/review/ReviewBox.js";
+
 
 function MovieCard() {
 	const params = useParams();
@@ -16,10 +18,15 @@ function MovieCard() {
 		});
 	}, [params.id]);
 
+
+
 	return (
 		<div>
 			<Navbar />
 			<div className="movie-card-container">
+				<div className="movie-rating">
+					<ReviewBox movieId={params.id} />
+				</div>
 				<div>
 					<img className="movie-card" src={movie.posterURL} alt="MovieCard" />
 				</div>
@@ -32,8 +39,10 @@ function MovieCard() {
 						Director: {movie.directors} | Duration: {movie.runtimeMinutes} |
 						Year: {movie.year}
 					</p>
+
 				</div>
 			</div>
+
 		</div>
 	);
 }
