@@ -232,27 +232,27 @@ export default Homepage;
         <div className="main-container">
           <Navbar />
     
-          {/* African Animals Carousel */}
-          <div className="recommendation-container">
-            <CarouselPage title="Trending" imageUrls={africanAnimalImages} />
-          </div>
+          {/* African Animals Carousel *///}
+//           <div className="recommendation-container">
+//             <CarouselPage title="Trending" imageUrls={africanAnimalImages} />
+//           </div>
     
-          {/* Nordic Nature Carousel */}
-          <div className="recommendation-container">
-            <CarouselPage title="Comedy" imageUrls={nordicNatureImages} />
-          </div>
+//           {/* Nordic Nature Carousel */}
+//           <div className="recommendation-container">
+//             <CarouselPage title="Comedy" imageUrls={nordicNatureImages} />
+//           </div>
     
-          {/* American Highways Carousel */}
-          <div className="recommendation-container">
-            <CarouselPage title="Action" imageUrls={winterPictures} />
-          </div>
-        </div>
-    )
-}
+//           {/* American Highways Carousel */}
+//           <div className="recommendation-container">
+//             <CarouselPage title="Action" imageUrls={winterPictures} />
+//           </div>
+//         </div>
+//     )
+// }
 
 
 
-export default Homepage;*/
+//export default Homepage;*/
 
 /*
 function Homepage() {
