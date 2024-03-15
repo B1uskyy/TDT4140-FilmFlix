@@ -1,10 +1,12 @@
 package no.ntnu.stud.gr55.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Set;
 
+import no.ntnu.stud.gr55.utils.kinocheck.MovieTrailer;
 import no.ntnu.stud.gr55.utils.omdb.OMDBFetch;
 import no.ntnu.stud.gr55.utils.omdb.OMDBMovie;
 
@@ -45,6 +47,10 @@ public class Movie {
     private Integer imdbVotes;
 
     private boolean detailsFetched = false;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "movie")
+    public List<Review> movieReview;
 
     public String getTitle() {
         return title;
@@ -139,5 +145,34 @@ public class Movie {
 
     public void setActors(List<String> actors) {
         this.actors = actors;
+    }
+
+    public List<Review> getMovieReview() {
+        return movieReview;
+    }
+
+    public void setMovieReview(List<Review> movieReview) {
+        this.movieReview = movieReview;
+    }
+
+    public void addMovieReview(Review review){
+        movieReview.add(review);
+        review.setMovie(this);
+    }
+
+    public void removeMovieReview(Review review){
+        movieReview.remove(review);
+        review.setMovie(null);
+    }
+
+    @Transient
+    public String getTrailerURL() {
+        MovieTrailer trailer = MovieTrailer.getTrailer(this.getId());
+
+        if (trailer == null ) {
+            return null;
+        }
+
+        return "https://www.youtube.com/watch?v=" + trailer.getYoutube_video_id();
     }
 }

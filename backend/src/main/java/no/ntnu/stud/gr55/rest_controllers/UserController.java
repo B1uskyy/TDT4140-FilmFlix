@@ -45,7 +45,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username and password must be provided");
         }
 
-        if (!userRepository.findByUsername(username).isEmpty()) {
+        if (userRepository.findByUsername(username) != null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         }
 
