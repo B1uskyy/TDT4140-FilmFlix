@@ -102,6 +102,8 @@ public class MovieController {
             }
         }
 
+        movie.loadTrailerURL();
+
         return movie;
     }
 

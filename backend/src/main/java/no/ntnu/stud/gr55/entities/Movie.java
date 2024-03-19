@@ -52,6 +52,9 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     public List<Review> movieReview;
 
+    @Transient
+    private String trailerURL;
+
     public String getTitle() {
         return title;
     }
@@ -167,12 +170,16 @@ public class Movie {
 
     @Transient
     public String getTrailerURL() {
+        return trailerURL;
+    }
+    @Transient
+    public void loadTrailerURL() {
         MovieTrailer trailer = MovieTrailer.getTrailer(this.getId());
 
-        if (trailer == null ) {
-            return null;
+        if (trailer == null) {
+            return;
         }
 
-        return "https://www.youtube.com/watch?v=" + trailer.getYoutube_video_id();
+        this.trailerURL = "https://www.youtube.com/watch?v=" + trailer.getYoutube_video_id();
     }
 }
