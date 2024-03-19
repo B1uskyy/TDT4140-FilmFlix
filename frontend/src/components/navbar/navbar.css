@@ -74,3 +74,9 @@ a:link, a:visited {
     padding-right: 50px;
     justify-content: right;
 }
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    color: white;
+}

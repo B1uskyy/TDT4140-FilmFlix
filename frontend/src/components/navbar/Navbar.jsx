@@ -13,7 +13,7 @@ export default function MyNav() {
                 <img src={FilmFlixLogo} alt="Logo" />
 
                 <div className='nav-link'>
-                    <Link to="/">HOME</Link>
+                    <Link to="/homepage">HOME</Link>
                 </div>
 
                 <div className='nav-link'>
@@ -25,6 +25,9 @@ export default function MyNav() {
             <SearchBar/>
 
             <div className='menu-items-right'>
+                <div className='logout-btn'>
+                    <Link to="/">LOGOUT</Link>
+                </div>
                 <div className='profile-btn'>
                     <Link to="/user">PROFILE</Link>
                 </div>

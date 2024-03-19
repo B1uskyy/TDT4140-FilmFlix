@@ -7,8 +7,11 @@ import Navbar from "../../components/navbar/Navbar.jsx";
 import ReviewBox from "../../components/review/ReviewBox.js";
 
 
-function MovieCard() {
-	const params = useParams();
+
+
+function MovieCard(){
+
+    const params = useParams();
 
 	const [movie, setMovie] = useState(Movie.empty());
 
@@ -17,8 +20,6 @@ function MovieCard() {
 			setMovie(movie);
 		});
 	}, [params.id]);
-
-
 
 	return (
 		<div>
@@ -42,7 +43,6 @@ function MovieCard() {
 
 				</div>
 			</div>
-
 		</div>
 	);
 }

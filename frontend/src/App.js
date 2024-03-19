@@ -12,12 +12,13 @@ import { UserProvider } from "./helpers/UserContext";
 function App() {
 	return (
 		<div>
+
 			<UserProvider>
 				<Router>
 					<Routes>
-						<Route path="/login" element={<Login />} />
+						<Route path="/homepage" element={<Homepage />} />
 						<Route path="/register" element={<Register />} />
-						<Route path="/" element={<Homepage />}></Route>
+						<Route path="/" element={<Login />}></Route>
 						<Route path="/user" element={<UserSite />}></Route>
 						<Route path="/movies/:id" element={<MovieCard />}></Route>
 						<Route path="/movies" element={<Movies />}></Route>
@@ -25,6 +26,7 @@ function App() {
 					</Routes>
 				</Router>
 			</UserProvider>
+
 		</div>
 	);
 }
