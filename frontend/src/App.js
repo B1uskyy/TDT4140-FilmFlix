@@ -3,7 +3,8 @@ import "./App.css"; // eslint-disable-next-line
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Homepage from "./pages/homepage/Homepage";
-import Movies from "./pages/movies/Movies";
+//import Movies from "./pages/movies/Movies";
+import Movies from "./components/movies/Movies";
 import UserSite from "./pages/user/UserSite";
 import MovieCard from "./pages/movie_card/MovieCard";
 import Register from "./pages/login/Register";

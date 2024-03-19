@@ -1,186 +1,82 @@
-import React from "react";
-import "./homepage.css"
-import ponyo from "../../img/ponyo.jpg"
-import totoro from "../../img/totoro.jpg"
-import Navbar from "../../components/navbar/Navbar.jsx"
-import CarouselPage from "../carouselpage/CarouselPage";
+import React, { useEffect, useState } from 'react';
+import './homepage.css';
+import Navbar from '../../components/navbar/Navbar.jsx';
+import MovieCarousel from '../../components/carousel/MovieCarousel.jsx';
+import RESTFetcher from '../../helpers/RESTFetcher.js';
 
-// function Homepage() {
-//     return (
-//         <div className="main-container"> 
-//         <Navbar />
-//             <div className="recommendation-container">
-//                 <h1 className="title-container">TRENDING</h1>
-//                 <div className="trending-movies">
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie1
-//                     </div>
-//                     <div className="movie-card">
-//                         <img className="picture" src={totoro} alt="Feil"/>
-//                         Movie2
-//                     </div>
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie3
-//                     </div>
-//                     <div className="movie-card">
-//                         <img className="picture" src={totoro} alt="Feil"/>
-//                         Movie4
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie5
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie6
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie7
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie8
-//                     </div>
-//                 </div>
-//             </div>
-//             <div className="recommendation-container">
-//                 <h1 className="title-container">COMEDY</h1>
-//                 <div className="trending-movies">
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie1
-//                     </div>
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie2
-//                     </div>
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie3
-//                     </div>
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie4
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie5
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie6
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie7
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie8
-//                     </div>
-//                 </div>
-//             </div>
-            
-//             <div className="recommendation-container">
-//                 <h1 className="title-container">ACTION</h1>
-//                 <div className="trending-movies">
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie1
-//                     </div>
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie2
-//                     </div>
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie3
-//                     </div>
-//                     <div className="movie-card">
-//                         <img className="picture" src={ponyo} alt="Feil"/>
-//                         Movie4
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie5
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie6
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie7
-//                     </div>
-//                     <div className="movie-card">
-//                         Movie8
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
+function Homepage() {
+    const [actionMovies, setActionMovies] = useState([]);
+    const [comedyMovies, setComedyMovies] = useState([]);
+    const [horrorMovies, setHorrorMovies] = useState([]);
+    const [dramaMovies, setDramaMovies] = useState([]); 
+    const [animationMovies, setAnimationMovies] = useState([]);
+
+    useEffect(() => {
+
+        fetchActionMovies();
+
+        fetchComedyMovies();
+
+        fetchHorrorMovies();
+
+        fetchDramaMovies(); 
+
+        fetchAnimationMovies();
+
+    }, []);
 
 
+    const fetchActionMovies = async () => {
+        const actionMoviesData = await RESTFetcher.fetchMovies('', 'Action', null, null, null, 1900, 2022);
+        setActionMovies(actionMoviesData.slice(0, 10));
+    };
 
-//export default Homepage;
+    const fetchComedyMovies = async () => {
+        const comedyMoviesData = await RESTFetcher.fetchMovies('', 'Comedy', null, null, null, 1900, 2022);
+        setComedyMovies(comedyMoviesData.slice(0, 10));
+    };
 
+    const fetchHorrorMovies = async () => {
+        const horrorMoviesData = await RESTFetcher.fetchMovies('', 'Horror', null, null, null, 1900, 2022);
+        setHorrorMovies(horrorMoviesData.slice(0, 10));
+    }
 
+    const fetchDramaMovies = async () => {
+        const dramaMoviesData = await RESTFetcher.fetchMovies('', 'Drama', null, null, null, 1900, 2022); 
+        setDramaMovies(dramaMoviesData.slice(0, 10)); 
+    };
 
-  function Homepage() {
-    // Placeholder URLs for African animals
-    const africanAnimalImages = [
-        "https://source.unsplash.com/800x400/?lion",
-        "https://source.unsplash.com/800x400/?elephant",
-        "https://source.unsplash.com/800x400/?giraffe",
-        "https://source.unsplash.com/800x400/?cheetah",
-        "https://source.unsplash.com/800x400/?rhinoceros",
-        "https://source.unsplash.com/800x400/?zebra",
-        "https://source.unsplash.com/800x400/?hippopotamus",
-        "https://source.unsplash.com/800x400/?gorilla",
-        "https://source.unsplash.com/800x400/?meerkat",
-        "https://source.unsplash.com/800x400/?african-buffalo"
-    ];
-  
-    // Placeholder URLs for Nordic nature
-    const nordicNatureImages = [
-        "https://source.unsplash.com/800x400/?aurora",
-        "https://source.unsplash.com/800x400/?mountain",
-        "https://source.unsplash.com/800x400/?forest",
-        "https://source.unsplash.com/800x400/?lake",
-        "https://source.unsplash.com/800x400/?snow",
-        "https://source.unsplash.com/800x400/?waterfall",
-        "https://source.unsplash.com/800x400/?landscape",
-        "https://source.unsplash.com/800x400/?sunset",
-        "https://source.unsplash.com/800x400/?cabin",
-        "https://source.unsplash.com/800x400/?northern-lights"
-    ];
-  
-    const winterPictures = [
-        "https://source.unsplash.com/800x400/?winter-snow",
-        "https://source.unsplash.com/800x400/?snowy-forest",
-        "https://source.unsplash.com/800x400/?winter-landscape",
-        "https://source.unsplash.com/800x400/?frozen-lake",
-        "https://source.unsplash.com/800x400/?snowy-mountains",
-        "https://source.unsplash.com/800x400/?winter-cabin",
-        "https://source.unsplash.com/800x400/?iceberg",
-        "https://source.unsplash.com/800x400/?snowfall",
-        "https://source.unsplash.com/800x400/?winter-wonderland",
-        "https://source.unsplash.com/800x400/?northern-lights-winter"
-    ];
-  
+    const fetchAnimationMovies = async () => {
+        const animationMoviesData = await RESTFetcher.fetchMovies('', 'Animation', null, null, null, 1900,2022);
+        setAnimationMovies(animationMoviesData.slice(0,10));
+    };
+
     return (
         <div className="main-container">
-          <Navbar />
-    
-          {/* African Animals Carousel */}
-          <div className="recommendation-container">
-            <CarouselPage title="Trending" imageUrls={africanAnimalImages} />
-          </div>
-    
-          {/* Nordic Nature Carousel */}
-          <div className="recommendation-container">
-            <CarouselPage title="Comedy" imageUrls={nordicNatureImages} />
-          </div>
-    
-          {/* American Highways Carousel */}
-          <div className="recommendation-container">
-            <CarouselPage title="Action" imageUrls={winterPictures} />
-          </div>
+            <Navbar />
+
+            <div className="recommendation-container">
+                <MovieCarousel title="Action Movies" movies={actionMovies} />
+            </div>
+
+            <div className="recommendation-container">
+                <MovieCarousel title="Comedy Movies" movies={comedyMovies} />
+            </div>
+
+            <div className="recommendation-container">
+                <MovieCarousel title="Horror Movies" movies={horrorMovies} />
+            </div>
+
+            <div className="recommendation-container">
+                <MovieCarousel title="Drama Movies" movies={dramaMovies} /> 
+            </div>
+
+            <div className="recommendation-container">
+                <MovieCarousel title="Animation Movies" movies={animationMovies} />
+            </div>
+            
         </div>
-      );
-    }
-    
-    export default Homepage;
+    );
+}
+
+export default Homepage;

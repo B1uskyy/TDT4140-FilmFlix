@@ -41,7 +41,17 @@ body {
     background-color: #6B2C2C;
   }
 
+  .movie-poster {
+    width: 100%;
+    height: auto;
+    max-height: 270px;
+}
+
 .title-container {
   margin-left: 30px;
   color: #CCCCCC;
+}
+
+.recommendation-container {
+  padding: 10px;
 }
