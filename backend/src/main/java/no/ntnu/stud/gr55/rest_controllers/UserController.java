@@ -80,9 +80,9 @@ public class UserController {
 
 
     @PostMapping("users/login")
-    public ResponseEntity<Object> login(@RequestBody User request) {
-        String username = request.getUsername();
-        String password = request.getPassword();
+    public ResponseEntity<Object> login(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String password = request.get("password");
 
         
         // Find user by username and password
