@@ -107,7 +107,6 @@ public class MovieController {
         return movie;
     }
 
-    @GetMapping("/movies/view/{id}/reviews")
     @PostMapping(path = "/movies/view/{id}/review", consumes = "application/json")
     public Map<String, String> addReview(@PathVariable("id") String id, @RequestBody Map<String, Object> body) {
         Movie movie = movieRepository.findById(id).orElse(null);
