@@ -1,120 +1,35 @@
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-// import "./login.css";
-import posters from "../../img/posters.jpg";
-import FilmFlixLogo from "../../img/FilmFlixLogo.svg";
-import { useUser } from "../../helpers/UserContext";
+import React, { useState } from 'react';
+// Assuming StarRating is your component that allows users to set a rating
+import StarRating from './StarRating';
 
-// import Logo from "./../components/Logo";
+const ReviewBox = () => {
+    // State to hold the review text
+    const [review, setReview] = useState('');
 
-function Login(props) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [successfulLogin, setSuccessfulLogin] = useState("");
-    const { setUser } = useUser();
+    // State to hold the star rating
+    const [rating, setRating] = useState(0);
 
-    // eslint-disable-next-line
-    const navigate = useNavigate();
-
-    const validateCredentials = async () => {
-        setSuccessfulLogin("");
-
-        try {
-            const response = await fetch("http://localhost:8080/api/users/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
-            });
-            console.log(response);
-
-            if (!response.ok) {
-                setSuccessfulLogin("Wrong username og password!");
-                throw new Error(
-                    "Failed to authenticate user. Please check your credentials.",
-                );
-            }
-
-            setUser({ username }); // Update context with the username
-            setSuccessfulLogin("Login successfull");
-            navigate("/");
-        } catch (error) {
-            console.log(`Error: ${error}`);
-        }
-    };
-
-    const onButtonClick = () => {
-        // Set initial error values to empty
-        setEmailError("");
-        setPasswordError("");
-        setSuccessfulLogin("");
-
-        if ("" === username) {
-            // Check if the user has entered both fields correctly
-            setEmailError("Please enter your username");
-            return;
-        }
-
-        if ("" === password) {
-            setPasswordError("Please enter a password");
-            return;
-        }
-
-        if (!emailError && !passwordError) {
-            validateCredentials();
-        }
+    // Handle the form submission
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Process the review and rating here (e.g., send to an API or state management store)
+        console.log("Review submitted with rating: ", rating, " and review: ", review);
     };
 
     return (
-        <div className={"mainContainer"}>
-            <div className="leftSide">
-                <img src={posters} alt="poster" className="posterImage" />
-            </div>
-            <div className="rightSide">
-                {/* <Logo /> */}
-                <img src={FilmFlixLogo} alt="Logo" className="filmFlixLogo" />
-                <div className={"inputContainer"}>
-                    <p className="inputTitle">Username</p>
-                    <br />
-                    <input
-                        value={username}
-                        placeholder="Enter your username here"
-                        onChange={(ev) => setUsername(ev.target.value)}
-                        className={"inputBox"}
-                    />
-                    <label className="errorLabel">{emailError}</label>
-                </div>
-                <br />
-                <div className={"inputContainer"}>
-                    <p className="inputTitle">Password</p>
-                    <br />
-                    <input
-                        type="password"
-                        value={password}
-                        placeholder="Enter your password here"
-                        onChange={(ev) => setPassword(ev.target.value)}
-                        className={"inputBox"}
-                    />
-                    <label className="errorLabel">{passwordError}</label>
-                </div>
-                <br />
-                <div className={"inputContainer"}>
-                    <input
-                        className={"inputButton"}
-                        type="button"
-                        onClick={onButtonClick}
-                        value={"Enter FilmFlix"}
-                    />
-                    <label className="successfulLogin">{successfulLogin}</label>
-                </div>
-                <a href="/register" className="signupLink">
-                    {" "}
-                    New user? Sign up
-                </a>
-            </div>
+        <div className="review-box">
+            <h2>Movie Review</h2>
+            <form onSubmit={handleSubmit}>
+                <StarRating rating={rating} setRating={setRating} />
+                <textarea
+                    value={review}
+                    onChange={(e) => setReview(e.target.value)}
+                    placeholder="Write your review here..."
+                />
+                <button type="submit">Submit Review</button>
+            </form>
         </div>
     );
-}
+};
 
-export default Login;
+export default ReviewBox;
