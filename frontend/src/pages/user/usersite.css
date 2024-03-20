@@ -161,3 +161,17 @@ p.user-site-element {
     background-color: #501919;
     border-radius: 10px;
 }
+
+.marked-movies-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Opprett et rutenett med fast kolonnebredde */
+    gap: 20px; /* Legg til litt mellomrom mellom hver film */
+}
+
+.marked-movie {
+    text-align: center; /* Sentrer innholdet i hvert rutenettselement */
+}
+
+.movie-poster {
+    max-width: 100%; /* Sørg for at plakaten ikke overstiger bredden på rutenettselementet */
+}
