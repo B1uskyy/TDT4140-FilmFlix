@@ -1,13 +1,11 @@
-/* movieCard.css */
-
 .movie-card {
     display: flex;
+    flex-direction: row;
     margin-bottom: 20px;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-  
-img.movie-card {
+
+img.movie-card {    
     display: flex;
     max-width: 450px;
     height: auto;
@@ -21,24 +19,111 @@ h2.movie-card {
     float: center;
     font-size: 4rem;
     margin-bottom: 10px;
-    color: cornsilk;
+    color: white;
 }
   
 p.movie-card {
     float: center;
     margin-bottom: 5px;
-    color: cornsilk
+    color: white
 }
 .movie-card-content {
-    float: center;
     margin-bottom: 10px;
-    color: cornsilk;
+    color: white;
 }
 
 .movie-card-container {
-    background-color: #590e0e; 
+    
+    background-color: #6B2C2C; 
     padding: 35px; 
     width: 100%;
     display: flex;
     align-items: stretch;
+}
+
+.title {
+    font-size: 4rem;
+    color: white;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    /*border-bottom: 1px solid white; */
+    margin: 0 0 20px 0;
+}
+
+.rating-and-watch-btn-containter {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.rating {
+    font-size: 1.5rem;
+    color: white;
+
+}
+
+.watched-btn {
+    background-color: #501919;
+    color: rgb(255, 255, 255);
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+
+}
+
+.movie-description {
+    font-size: 1.2rem;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid rgb(174, 120, 120);
+    padding-bottom: 20px;
+}
+
+.movie-genres-and-director-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.movie-genres {
+    font-size: 1.2rem;
+    color: white;
+    margin-right: 200px;
+
+}
+
+.movie-director {
+    font-size: 1.2rem;
+    color: white;
+}
+.movie-left-side-containter {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.movie-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #501919;
+    border-radius: 5px;
+    min-height: 40px;
 }
