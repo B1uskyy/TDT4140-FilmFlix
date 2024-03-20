@@ -9,29 +9,32 @@ export default function MyNav() {
     return (        
         <nav className="nav-container">
             <div className="menu-items">
-
                 <Link to="/homepage">
-                <img src={FilmFlixLogo} alt="Logo" />
+                    <img src={FilmFlixLogo} alt="Logo" />
                 </Link>
 
-                <div className='nav-link'>
-                    <Link to="/homepage">HOME</Link>
-                </div>
+                <Link to="/homepage">
+                    <div className='nav-link'>
+                        <p className='text'>HOME</p>
+                    </div>
+                </Link>
 
-                <div className='nav-link'>
-                    <Link to="/movies">MOVIES</Link>
-                </div>
-
+                <Link to="/movies">
+                    <div className='nav-link'>
+                        <p className='text'>MOVIES</p>
+                    </div>
+                </Link>
             </div>
 
             <SearchBar/>
 
             <div className='menu-items-right'>
-                <div className='profile-btn'>
-                    <Link to="/user">PROFILE</Link>
-                </div>
+                    <Link to="/user">
+                        <div className='profile-btn'>
+                            <p className='text'>PROFILE</p>
+                        </div>
+                    </Link>
             </div>
-
         </nav>
     )
 }
