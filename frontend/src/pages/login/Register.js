@@ -28,6 +28,10 @@ function Register() {
 		}
 	};
 
+	const toLogin = async () => {
+		window.location.href = "/";
+	}
+
 	return (
 		<div className={"mainContainer"}>
 			<div className="leftSide">
@@ -64,7 +68,10 @@ function Register() {
 						className={"inputButton"}
 						type="button"
 						value={"Register user"}
-						onClick={() => registerUser()}
+						onClick={() => {
+							registerUser();
+							toLogin();
+						}}
 					/>
 				</div>
 			</div>

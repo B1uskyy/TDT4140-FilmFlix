@@ -17,9 +17,9 @@ function App() {
 			<UserProvider>
 				<Router>
 					<Routes>
-						<Route path="/login" element={<Login />} />
+						<Route path="/" element={<Login />} />
 						<Route path="/register" element={<Register />} />
-						<Route path="/" element={<Homepage />}></Route>
+						<Route path="/homepage" element={<Homepage />}></Route>
 						<Route path="/user" element={<UserSite />}></Route>
 						<Route path="/movies/:id" element={<MovieCard />}></Route>
 						<Route path="/movies" element={<Movies />}></Route>

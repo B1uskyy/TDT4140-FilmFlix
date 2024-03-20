@@ -10,12 +10,12 @@ export default function MyNav() {
         <nav className="nav-container">
             <div className="menu-items">
 
-                <Link to="/">
+                <Link to="/homepage">
                 <img src={FilmFlixLogo} alt="Logo" />
                 </Link>
 
                 <div className='nav-link'>
-                    <Link to="/">HOME</Link>
+                    <Link to="/homepage">HOME</Link>
                 </div>
 
                 <div className='nav-link'>

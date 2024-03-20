@@ -38,7 +38,7 @@ function Login(props) {
 
 			setUser({ username }); // Update context with the username
 			setSuccessfulLogin("Login successfull");
-			navigate("/");
+			navigate("/homepage");
 		} catch (error) {
 			console.log(`Error: ${error}`);
 		}
