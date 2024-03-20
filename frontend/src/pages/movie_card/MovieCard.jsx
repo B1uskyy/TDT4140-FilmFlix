@@ -43,21 +43,45 @@ function MovieCard() {
 		<div>
 			<Navbar />
 			<div className="movie-card-container">
-				<div>
+				<div className="movie-card-content movie-left-side-containter">
 					<img className="movie-card" src={movie.posterURL} alt="MovieCard" />
+						<div className="movie-footer">
+							<p>Release year: {movie.year}</p>
+							<p>|</p>
+							<p>{movie.runtimeMinutes} min</p>
+						</div>
 				</div>
 
 				<div className="movie-card-content">
-					<h2 className="movie-card"> {movie.title}</h2>
-					<p className="movie-card"> {movie.description}</p>
-					<p className="movie-card"> {movie.genres} </p>
-					<p className="movie-card">
-						Director: {movie.directors} | Duration: {movie.runtimeMinutes} |
-						Year: {movie.year}
-					</p>
-					<button onClick={toggleMarked}>
-                        {isMarked ? "Unmark" : "Mark"} {/* Toggle mark/unmark button */}
-                    </button>
+					<div className="title-container">
+						<h1 className="title">{movie.title}</h1>
+					</div>
+
+					<div className="rating-and-watch-btn-containter">
+						<p className="rating">Rating: {movie.rating}</p>
+						<button onClick={toggleMarked} className="watched-btn">
+						{isMarked ? "Mark as unwatched" : "Mark as watched"} {/* Toggle mark/unmark button */}</button>
+					</div>
+					
+					<div className="movie-description">
+						<p className=""> {movie.description}</p>
+					</div>
+
+					<div className="movie-genres-and-director-container">
+
+						<div className="movie-genres">
+							<h2 className="margin-btm">Genres:</h2>
+							<br></br>
+							<p>{movie.genres.join('  |  ')}</p>
+						</div>
+	
+						<div className="movie-director">
+							<h2 className="margin-btm">Director:</h2>
+							<br></br>
+							<p>{movie.directors}</p>
+						</div>
+
+					</div>			
 				</div>
 			</div>
 		</div>
