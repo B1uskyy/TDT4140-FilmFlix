@@ -4,17 +4,40 @@ import "./moviecard.css";
 import RESTFetcher from "../../helpers/RESTFetcher";
 import { Movie } from "../../helpers/BackendEntities";
 import Navbar from "../../components/navbar/Navbar.jsx";
+import { useUser } from "../../helpers/UserContext";
+import  MarkedMoviesList from "../../components/moviesWatched/MarkedMoviesList.jsx";
 
 function MovieCard() {
 	const params = useParams();
+	const { markMovie, unmarkMovie, markedMovies } = useUser();
 
 	const [movie, setMovie] = useState(Movie.empty());
+	const [isMarked, setIsMarked] = useState(false);
 
 	useEffect(() => {
 		RESTFetcher.fetchMovie(params.id).then((movie) => {
 			setMovie(movie);
+			setIsMarked(movieIsMarked(movie.id));
 		});
-	}, [params.id]);
+	}, [params.idm]);
+
+	const movieIsMarked = (movieId) => {
+		return markedMovies.includes(movieId);
+	};
+
+	const handleMarkMovie = () => {
+		markMovie(params.id); // Kall markMovie-funksjonen med filmens ID
+		setIsMarked(true); // Oppdater isMarked til true
+	};
+
+	const toggleMarked = () => {
+        if (isMarked) {
+            unmarkMovie(movie.id);
+        } else {
+            markMovie(movie.id);
+        }
+        setIsMarked(!isMarked);
+    };
 
 	return (
 		<div>
@@ -32,6 +55,9 @@ function MovieCard() {
 						Director: {movie.directors} | Duration: {movie.runtimeMinutes} |
 						Year: {movie.year}
 					</p>
+					<button onClick={toggleMarked}>
+                        {isMarked ? "Unmark" : "Mark"} {/* Toggle mark/unmark button */}
+                    </button>
 				</div>
 			</div>
 		</div>
