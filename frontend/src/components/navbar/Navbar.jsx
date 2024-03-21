@@ -38,12 +38,13 @@ export default function MyNav() {
             <SearchBar/>
 
             <div className='menu-items-right'>
-                    <Link to="/user">
-                        <div className='profile-btn'>
-                            <p className='text'>PROFILE</p>
-                        </div>
-                    </Link>
+                <Link to={user ? "/user" : "/"}>
+                    <div className='profile-btn'>
+                        <p className='text'>PROFILE</p>
+                    </div>
+                </Link>
                 {user &&
+
                     <div className='nav-link' onClick={logout}>
                         <p className='text'>LOGG UT</p>
                     </div> }
