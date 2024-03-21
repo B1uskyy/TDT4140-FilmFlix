@@ -4,33 +4,48 @@ import "./login.css";
 import posters from "../../img/posters.jpg";
 import FilmFlixLogo from "../../img/FilmFlixLogo.svg";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function Register() {
 	const [password, setPassword] = useState("");
 	const [username, setUserName] = useState("");
 
-	const registerUser = async () => {
-		try {
-			const response = await axios.post("http://localhost:8080/api/users/register", {
-				username: username,
-				password: password,
-			},
-				{
-					headers: {
-						"Content-Type": "application/json",
-						"Accept": "application/json",
-					},
-				});
+	// navigate
+	const navigate = useNavigate();
 
-			console.log(response.data);
-		} catch (error) {
-			console.log(error);
-		}
+	const registerUser = () => {
+		const response = axios.post("http://localhost:8080/api/users/register", {
+			username: username,
+			password: password,
+		},
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+				},
+			}).then((response) => {
+			console.log(response.status)
+				const json = response.data;
+
+				if (json.status === "success") {
+					alert("User registered");
+					navigate("/");
+				}
+
+			}).catch((error) => {
+				if (error.response.status === 400) {
+					alert("No username or password provided");
+					return;
+				}
+				else if (error.response.status === 409) {
+					alert("Username already exists");
+					return;
+				}
+
+				alert("Unknown error - contact support");
+			})
+		;
 	};
-
-	const toLogin = async () => {
-		window.location.href = "/";
-	}
 
 	return (
 		<div className={"mainContainer"}>
@@ -70,7 +85,6 @@ function Register() {
 						value={"Register user"}
 						onClick={() => {
 							registerUser();
-							toLogin();
 						}}
 					/>
 				</div>
