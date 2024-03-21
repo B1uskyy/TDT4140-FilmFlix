@@ -1,10 +1,19 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import FilmFlixLogo from '../../img/FilmFlixLogo.svg';
 import './navbar.css';
 import SearchBar from "../searchbar/SearchBar";
+import {useUser} from "../../helpers/UserContext";
 
-export default function MyNav() {  
+export default function MyNav() {
+
+    const {user, setUser} = useUser();
+    const navigate = useNavigate();
+
+    const logout = () => {
+        setUser(null);
+        navigate("/");
+    }
 
     return (        
         <nav className="nav-container">
@@ -34,8 +43,19 @@ export default function MyNav() {
                             <p className='text'>PROFILE</p>
                         </div>
                     </Link>
+                {user &&
+                    <div className='nav-link' onClick={logout}>
+                        <p className='text'>LOGG UT</p>
+                    </div> }
+                {!user &&
+                    <Link to="/">
+                        <div className='nav-link'>
+                            <p className='text'>LOGG INN</p>
+                        </div>
+                    </Link>
+                }
             </div>
-        </nav>
-    )
+</nav>
+)
 }
 

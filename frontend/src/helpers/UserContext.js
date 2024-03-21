@@ -1,11 +1,25 @@
 // In UserContext.js
-import React, { createContext, useState, useContext } from "react";
+import React, {createContext, useState, useContext, useEffect} from "react";
+import {useCookies} from "react-cookie";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-	const [user, setUser] = useState(null);
+	const [cookies, setCookie, removeCookie] = useCookies(["username"]);
+
+	const [user, setUser] = useState(cookies.username || null);
 	const [markedMovies, setMarkedMovies] = useState([]);
+
+	useEffect(() => {
+		if (user) {
+			setCookie("username", user, { path: "/" });
+		} else {
+			removeCookie("username");
+		}
+	}, [user]);
+
+	// set the cookie together with user
+
 
 	const markMovie = (movieId) => {
 		if (!markedMovies.includes(movieId)) {

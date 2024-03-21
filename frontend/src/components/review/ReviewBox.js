@@ -22,7 +22,11 @@ function ReviewBox ({ username, movieId }) {
             return;
         }
 
-        RESTFetcher.addReview(movieId, username, rating, review);
+        RESTFetcher.addReview(movieId, username, rating, review).then((success) => {
+            if (success) {
+                window.location.reload();
+            }
+        });
         // Process the review and rating here (e.g., send to an API or state management store)
         console.log("Review submitted with rating: ", rating, " and review: ", review);
     };
