@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
+import MovieCard from "../movie_card/MovieCard";
 
 
 const MovieCarousel = ({ title, movies }) => {
@@ -42,22 +43,7 @@ const MovieCarousel = ({ title, movies }) => {
             <h2>{title}</h2>
             <Slider {...settings}>
                 {movies.map((movie, index) => (
-                    <div key={index}>
-                        <Link to={`/movies/${movie.id}`} className="movie">
-                            <div className="movie-block">
-                                <img
-                                    className="movie-poster"
-                                    src={movie.posterURL === 'N/A' ? 'https://via.placeholder.com/300' : movie.posterURL}
-                                    alt={movie.title}
-                                />
-                                <div className="movie-info">
-                                    <h3>{movie.title}</h3>
-                                    <p>{movie.year}</p>
-                                    <p>{movie.genres !== null ? movie.genres.join(' | ') : ''}</p>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
+                    <MovieCard movie={movie} index={index} />
                 ))}
             </Slider>
         </div>

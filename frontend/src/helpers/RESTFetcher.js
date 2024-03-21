@@ -1,4 +1,4 @@
-import {Movie} from './BackendEntities'
+import {Movie, UserReview} from './BackendEntities'
 
 class RESTFetcher {
     static url = "http://localhost:8080/api/"
@@ -20,6 +20,10 @@ class RESTFetcher {
     static urlActors = this.urlMovies + "/actors"
     static urlYears = this.urlMovies + "/years"
 
+    static reviewURL(movieId) {
+        return this.urlMovieView(movieId) + "/review";
+    }
+
     static jsonToMovie(json) {
         console.log("json: " + json)
 
@@ -35,8 +39,20 @@ class RESTFetcher {
             json.directors,
             json.writers,
             json.actors,
-            json.imdbVotes
+            json.imdbVotes,
+            json.movieReview.map(review => this.jsonToReview(review)),
+            json.trailerURL
         );
+    }
+
+    static jsonToReview(json) {
+        return new UserReview(
+            json.reviewer,
+            json.rating,
+            json.review,
+            json.id
+        );
+
     }
 
     /**
@@ -168,6 +184,36 @@ class RESTFetcher {
 
     static async fetchYears() {
         return await this.fetchJSON(this.urlYears, {min: 1900, max: 2050});
+    }
+
+    static async addReview( movieId, username, rating, review ) {
+        try {
+            const response = await fetch(this.reviewURL(movieId), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, rating, review }),
+            });
+            console.log(response);
+            return response.ok;
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return false;
+        }
+    }
+
+    static async removeReview( movieId, username ) {
+        try {
+            const response = await fetch(this.reviewURL(movieId), {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username }),
+            });
+            console.log(response);
+            return response.ok;
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return false;
+        }
     }
 
 }

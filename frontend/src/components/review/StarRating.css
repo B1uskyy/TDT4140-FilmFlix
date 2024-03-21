@@ -1,0 +1,26 @@
+.star-rating button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#submit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.star {
+  color: gold;
+}
+
+.on .star {
+  color: gold;
+}
+
+.off .star {
+  color: grey;
+}

@@ -1,6 +1,6 @@
 
 class Movie {
-    constructor(id, title, year, runtimeMinutes, genres, posterURL, description, directors, writers, actors, imdbVotes){
+    constructor(id, title, year, runtimeMinutes, genres, posterURL, description, directors, writers, actors, imdbVotes, reviews, youtube_embed_url){
         this.id = id;
         this.title = title;
         this.year = year;
@@ -12,11 +12,22 @@ class Movie {
         this.writers = writers;
         this.actors = actors;
         this.imdbVotes = imdbVotes;
+        this.reviews = reviews;
+        this.youtube_embed_url = youtube_embed_url;
     }
 
     static empty(){
-        return new Movie(-1, "", -1, -1, [], "", "", [], [], [], -1);
+        return new Movie(-1, "", -1, -1, [], "", "", [], [], [], -1, [], null);
     } 
 }
 
-export {Movie}
+class UserReview {
+    constructor(reviewer, rating, review, id){
+        this.reviewer = reviewer;
+        this.rating = rating;
+        this.review = review;
+        this.id = id;
+    }
+}
+
+export {Movie, UserReview}

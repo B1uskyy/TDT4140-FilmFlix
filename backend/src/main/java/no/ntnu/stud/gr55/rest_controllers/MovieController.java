@@ -1,7 +1,11 @@
 package no.ntnu.stud.gr55.rest_controllers;
 
 import no.ntnu.stud.gr55.entities.Movie;
+import no.ntnu.stud.gr55.entities.Review;
+import no.ntnu.stud.gr55.entities.User;
 import no.ntnu.stud.gr55.repositories.MovieRepository;
+import no.ntnu.stud.gr55.repositories.ReviewRepository;
+import no.ntnu.stud.gr55.repositories.UserRepository;
 import no.ntnu.stud.gr55.utils.omdb.OMDBFetch;
 import no.ntnu.stud.gr55.utils.omdb.OMDBSearch;
 import org.hibernate.Hibernate;
@@ -25,6 +29,12 @@ public class MovieController {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Value("${omdb_api_key}")
     private String omdbApiKey;
@@ -92,7 +102,88 @@ public class MovieController {
             }
         }
 
+        movie.loadTrailerURL();
+
         return movie;
+    }
+
+    @PostMapping(path = "/movies/view/{id}/review", consumes = "application/json")
+    public Map<String, String> addReview(@PathVariable("id") String id, @RequestBody Map<String, Object> body) {
+        Movie movie = movieRepository.findById(id).orElse(null);
+        if (movie == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found.");
+        }
+
+        if (body.get("username") == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User ID is required.");
+        }
+
+        User user = userRepository.findByUsername((String)body.get("username"));
+
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.");
+        }
+
+        if (body.get("rating") == null || body.get("review") == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Rating and review are required.");
+        }
+
+        // check for duplicate
+        if (reviewRepository.findByUserAndMovie(user, movie) != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User has already reviewed this movie.");
+        }
+
+        int rating = (int) body.get("rating");
+        String review = (String) body.get("review");
+
+        if (rating < 0 || rating > 5) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Rating must be between 0 and 5.");
+        }
+
+        Review movieReview = new Review();
+        movieReview.setRating(rating);
+        movieReview.setReview(review);
+
+        movie.addMovieReview(movieReview);
+        user.addMovieReview(movieReview);
+
+        movieRepository.save(movie);
+        userRepository.save(user);
+        reviewRepository.save(movieReview);
+
+        return Map.of("status", "ok");
+    }
+
+    @DeleteMapping(path = "/movies/view/{id}/review", consumes = "application/json")
+    public Map<String, String> deleteReview(@PathVariable("id") String id, @RequestBody Map<String, Object> body) {
+        Movie movie = movieRepository.findById(id).orElse(null);
+        if (movie == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found.");
+        }
+
+        if (body.get("username") == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User ID is required.");
+        }
+
+        User user = userRepository.findByUsername((String)body.get("username"));
+
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.");
+        }
+
+        Review review = reviewRepository.findByUserAndMovie(user, movie);
+        if (review == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found.");
+        }
+
+        movie.removeMovieReview(review);
+        user.removeMovieReview(review);
+
+        movieRepository.save(movie);
+        userRepository.save(user);
+        reviewRepository.delete(review);
+
+        return Map.of("status", "ok");
     }
 
     @GetMapping("/movies/genres")
