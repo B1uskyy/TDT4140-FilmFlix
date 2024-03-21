@@ -3,13 +3,11 @@ import "./App.css"; // eslint-disable-next-line
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Homepage from "./pages/homepage/Homepage";
-//import Movies from "./pages/movies/Movies";
-import Movies from "./components/movies/Movies";
+import Movies from "./pages/movies/Movies";
 import UserSite from "./pages/user/UserSite";
-import MovieCard from "./pages/movie_card/MovieCard";
+import MoviePage from "./pages/movie_page/MoviePage";
 import Register from "./pages/login/Register";
 import { UserProvider } from "./helpers/UserContext";
-import CarouselPage from "./pages/carouselpage/CarouselPage";
 
 function App() {
 	return (
@@ -21,10 +19,9 @@ function App() {
 						<Route path="/register" element={<Register />} />
 						<Route path="/homepage" element={<Homepage />}></Route>
 						<Route path="/user" element={<UserSite />}></Route>
-						<Route path="/movies/:id" element={<MovieCard />}></Route>
+						<Route path="/movies/:id" element={<MoviePage />}></Route>
 						<Route path="/movies" element={<Movies />}></Route>
 						<Route path="/search/:query" element={<Movies />}></Route>
-						<Route path="/carouselpage" element={<CarouselPage />}></Route>
 					</Routes>
 				</Router>
 			</UserProvider>

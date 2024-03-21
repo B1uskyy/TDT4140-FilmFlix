@@ -8,6 +8,7 @@ import Navbar from "../../components/navbar/Navbar.jsx";
 import {Link, useParams} from "react-router-dom";
 import ValueSelectorMultivalue from "../../components/value_selectors/ValueSelectorMultivalue.jsx";
 import ValueSelectorRangeTwovalued from "../../components/value_selectors/ValueSelectorRangeTwovalued";
+import MovieCard from "../../components/movie_card/MovieCard";
 
 const Movies = () => {
 
@@ -87,18 +88,7 @@ const Movies = () => {
             ) : (
                 <div className="movies-container">
                   {movies.map((movie, index) => (
-                      <Link to={"/movies/"+ movie.id} className="movie" key={index}>
-                        <div className="movie-block">
-                          <img className="movie-poster" src={
-                            movie.posterURL === "N/A" ? "https://via.placeholder.com/300" : movie.posterURL
-                          } alt={movie.title}/>
-                          <div className="movie-info">
-                            <h2>{movie.title}</h2>
-                            <p>{movie.year}</p>
-                            <p>{(movie.genres !== null) ? movie.genres.join(' | ') : ""}</p>
-                          </div>
-                        </div>
-                      </Link>
+                    <MovieCard movie={movie} index={index}/>
                   ))}
               </div>
             )}

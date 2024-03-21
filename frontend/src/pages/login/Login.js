@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import posters from "../../img/posters.jpg";
@@ -36,7 +36,7 @@ function Login(props) {
 				);
 			}
 
-			setUser({ username }); // Update context with the username
+			setUser( username ); // Update context with the username
 			setSuccessfulLogin("Login successfull");
 			navigate("/homepage");
 		} catch (error) {
