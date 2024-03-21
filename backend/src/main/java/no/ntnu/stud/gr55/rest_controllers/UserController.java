@@ -36,12 +36,16 @@ public class UserController {
 
 
     @PostMapping("/users/register")
-    public User register(@RequestBody Map<String, String> body) {
+    public Map<String, String> register(@RequestBody Map<String, String> body) {
 
         String username = body.get("username");
         String password = body.get("password");
 
         if (username == null || password == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username and password must be provided");
+        }
+
+        if (username.isEmpty() || password.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username and password must be provided");
         }
 
@@ -54,7 +58,9 @@ public class UserController {
         user.setUsername(username);
         user.setPassword(password);
 
-        return userRepository.save(user);
+        userRepository.save(user);
+
+        return Map.of("status", "success");
 
 
         // if (isValidCredentials(email, password)) {

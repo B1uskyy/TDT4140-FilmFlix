@@ -192,9 +192,18 @@ class RESTFetcher {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, rating, review }),
-            });
-            console.log(response);
-            return response.ok;
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        console.log("Review added successfully");
+                        return true;
+                    }
+                    else{
+                        console.log("Review could not be added");
+                        return false;
+                    }
+                });
+            return response;
         } catch (error) {
             console.log(`Error: ${error}`);
             return false;

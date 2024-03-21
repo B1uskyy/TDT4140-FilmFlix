@@ -66,7 +66,7 @@ function UserSite() {
                     </div>
                     <div>
                         <div className="informationBox">
-                            <h1 className="user-site-element">{userName}</h1>
+                            <h1 className="user-site-element">{user}</h1>
                             <p className="user-site-element">{description}</p>
                         </div>
                     </div>
