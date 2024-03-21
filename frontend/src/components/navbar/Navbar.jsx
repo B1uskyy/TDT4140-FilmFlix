@@ -46,12 +46,12 @@ export default function MyNav() {
                 {user &&
 
                     <div className='nav-link' onClick={logout}>
-                        <p className='text'>LOGG UT</p>
+                        <p className='text'>LOG OUT</p>
                     </div> }
                 {!user &&
                     <Link to="/">
                         <div className='nav-link'>
-                            <p className='text'>LOGG INN</p>
+                            <p className='text'>LOG IN</p>
                         </div>
                     </Link>
                 }
